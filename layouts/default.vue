@@ -1,6 +1,7 @@
 <template>
   <v-app light style="background-color: #e4e5e5">
-    <Nav />
+    <Nav v-if="false"/>
+    <NavDense v-if="true"/>
     <v-main>
       <nuxt />
     </v-main>
@@ -12,8 +13,9 @@
 
 <script>
 import Nav from '~/components/Nav.vue'
+import NavDense from '~/components/NavDense.vue'
 export default {
-  components: { Nav },
+  components: { Nav, NavDense },
 
   data() {
     return {

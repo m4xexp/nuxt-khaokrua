@@ -2,12 +2,11 @@
   <div>
     <v-app-bar
       prominent
-      absolute
+      fixed
       app
       dark
       class="header-nav"
-      height="360px"
-      fade-img-on-scroll
+      height="280px"
       src="https://firebasestorage.googleapis.com/v0/b/khaokrua-e8479.appspot.com/o/cover_khaokrua.jpg?alt=media&token=7ba8172c-25e6-4585-8dde-9b108eb98054"
     >
       <div class="header-nav-icon">
@@ -45,7 +44,7 @@
 
       <!-- Seach Recipe https://i.pinimg.com/originals/13/05/4e/13054e16f995defb42e543ccc0e32f58.jpg-->
 
-      <div class="search-field" style="">
+      <div class="search-field" style="display: none">
         <div class="search-text-field-bar">
           <v-text-field
             light
@@ -76,7 +75,7 @@
         </li>
 
         <li class="btn-fav-recipe">
-          <v-btn left text link href="/pages/favorite">
+          <v-btn left text>
             <v-icon left>favorite</v-icon>
             <span>เมนูโปรด</span>
           </v-btn>
@@ -191,8 +190,6 @@ export default {
   }),
 }
 </script>
-
-
 
 <style scrope>
 * {

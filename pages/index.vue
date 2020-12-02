@@ -35,16 +35,18 @@
           "
         >
           <nuxt-link to="#" class="view-all-tag">
-            <span>
-              ดูทั้งหมด
-            </span>
+            <span> ดูทั้งหมด </span>
           </nuxt-link>
 
-          <v-chip-group
-            active-class="primary--text"
-            style="margin-top: 20px"
-          >
-            <v-chip large color="red" outlined link v-for="tag in tags" :key="tag.tagName">
+          <v-chip-group active-class="primary--text" style="margin-top: 20px">
+            <v-chip
+              large
+              color="red"
+              outlined
+              link
+              v-for="tag in tags"
+              :key="tag.tagName"
+            >
               {{ tag.tagName }}
             </v-chip>
           </v-chip-group>
@@ -83,11 +85,13 @@
 
             <!-- Img for recipe card -->
 
-            <v-img
-              class="card-recipe-img"
-              height="200"
-              :src="recipe.src"
-            ></v-img>
+            <div class="card-recipe-zoom" style="overflow: hidden">
+              <v-img
+                class="card-recipe-img"
+                height="200"
+                :src="recipe.src"
+              ></v-img>
+            </div>
 
             <div class="btn-fav-recipe">
               <div>
@@ -207,16 +211,17 @@
             </template>
 
             <!-- Img for recipe card -->
-
-            <v-img
-              class="card-recipe-img"
-              height="200"
-              src="../assets/Recipe/beefwell.jpg"
-            ></v-img>
+            <div class="card-recipe-zoom" style="overflow: hidden">
+              <v-img
+                class="card-recipe-img"
+                height="200"
+                :src="recipe.src"
+              ></v-img>
+            </div>
 
             <div class="btn-fav-recipe">
               <div>
-                <v-icon class="btn-fav-recipe-icon" style=""
+                <v-icon class="btn-fav-recipe-icon" @click="FavBtn()"
                   >favorite_border</v-icon
                 >
               </div>
@@ -255,12 +260,7 @@
             </v-card-text>
 
             <v-card-actions>
-              <v-btn
-                block
-                dark
-                text
-                style="background-color: green"
-              >
+              <v-btn block dark text style="background-color: green">
                 <span>ทำอาหาร</span>
               </v-btn>
             </v-card-actions>
@@ -367,7 +367,7 @@ export default {
       { tagName: 'Ice cream' },
     ],
     methods: {
-      reserve() {
+      reserve () {
         this.loading = true
 
         setTimeout(() => (this.loading = false), 2000)
@@ -378,14 +378,13 @@ export default {
 </script>
 
 <style lang="scss">
-
-@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap');
 
 * {
   margin: 0;
   padding: 0;
   outline: none;
-  font-family: "Kanit", sans-serif;
+  font-family: 'Kanit', sans-serif;
   box-sizing: border-box;
 }
 
@@ -435,6 +434,13 @@ export default {
   font-weight: bold;
   padding: 15px;
   border-radius: 50%;
+  transition: 0.3s ease-in-out;
+}
+
+.menu-card-each-card .btn-fav-recipe .btn-fav-recipe-icon:hover {
+  background: red;
+  color: white;
+  transform: scale(1.1);
 }
 
 .header-menu-tag {
@@ -476,16 +482,21 @@ export default {
 
 #card-recipe {
   transition: 0.25s ease;
-  cursor: pointer;
-}
-
-#card-recipe .card-recipe-img {
-  background-size: 150%;
+  overflow: hidden;
+  // cursor: pointer;
 }
 
 #card-recipe:hover {
   transform: scale(1.05);
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+}
+
+#card-recipe .card-recipe-img {
+  transition: 0.25s ease;
+}
+
+#card-recipe:hover .card-recipe-img {
+  transform: scale(1.2);
 }
 
 .menu-card-box {
@@ -528,7 +539,6 @@ export default {
   transition: 0.5s ease-in-out;
   text-decoration: underline;
 }
-
 </style>
 
 
