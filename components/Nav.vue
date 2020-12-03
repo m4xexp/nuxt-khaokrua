@@ -19,14 +19,16 @@
 
       <div class="header-nav-logo">
         <div class="nav-logo">
-          <v-img
-            alt="khaokrua Logo"
-            class="shrink mr-2"
-            contain
-            src="https://firebasestorage.googleapis.com/v0/b/khaokrua-e8479.appspot.com/o/KhaoKrua_logo.png?alt=media&token=ea7ca56b-be32-47da-adb5-e956ab039f73"
-            transition="scale-transition"
-            width="360"
-          />
+          <nuxt-link to="/">
+            <v-img
+              alt="khaokrua Logo"
+              class="shrink mr-2"
+              contain
+              src="https://firebasestorage.googleapis.com/v0/b/khaokrua-e8479.appspot.com/o/KhaoKrua_logo.png?alt=media&token=ea7ca56b-be32-47da-adb5-e956ab039f73"
+              transition="scale-transition"
+              width="360"
+            />
+          </nuxt-link>
         </div>
       </div>
 

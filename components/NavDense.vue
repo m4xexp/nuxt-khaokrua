@@ -30,16 +30,18 @@
       </div>
 
       <div class="header-nav-logo">
-        <div class="nav-logo">
-          <v-img
-            alt="khaokrua Logo"
-            class="shrink mr-2"
-            contain
-            src="../assets/KhaoKrua_logo.png"
-            transition="scale-transition"
-            width="360"
-          />
-        </div>
+        <nuxt-link to="/" style="bacground-color: black">
+          <div class="nav-logo">
+            <v-img
+              alt="khaokrua Logo"
+              class="shrink mr-2"
+              contain
+              src="../assets/KhaoKrua_logo.png"
+              transition="scale-transition"
+              width="360"
+            />
+          </div>
+        </nuxt-link>
       </div>
 
       <!-- Seach Recipe https://i.pinimg.com/originals/13/05/4e/13054e16f995defb42e543ccc0e32f58.jpg-->
@@ -283,8 +285,8 @@ span {
   vertical-align: middle;
 }
 
-ul li a{
-  text-decoration: none
+ul li a {
+  text-decoration: none;
 }
 
 li a span {

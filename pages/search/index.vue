@@ -30,7 +30,14 @@
       "
     >
       <v-sheet color="white" height="150" class="sheet-fav-menu">
-        <h1 style="text-align: left">ผลการค้นหา</h1>
+        <v-breadcrumbs :items="breadcrumbs" style="position: absolute; left: 2em; top: 7em;">
+          <template v-slot:item="{ item }">
+            <v-breadcrumbs-item :href="item.href" :disabled="item.disabled">
+              {{ item.text.toUpperCase() }}
+            </v-breadcrumbs-item>
+          </template>
+        </v-breadcrumbs>
+        <h1 style="text-align: left; margin-top: 1em">ผลการค้นหา</h1>
       </v-sheet>
     </v-row>
 
@@ -200,65 +207,24 @@ export default {
     isEditing: true,
     model: null,
     states: [
-      'Alabama',
-      'Alaska',
-      'American Samoa',
-      'Arizona',
-      'Arkansas',
-      'California',
-      'Colorado',
-      'Connecticut',
-      'Delaware',
-      'District of Columbia',
-      'Federated States of Micronesia',
-      'Florida',
-      'Georgia',
-      'Guam',
-      'Hawaii',
-      'Idaho',
-      'Illinois',
-      'Indiana',
-      'Iowa',
-      'Kansas',
-      'Kentucky',
-      'Louisiana',
-      'Maine',
-      'Marshall Islands',
-      'Maryland',
-      'Massachusetts',
-      'Michigan',
-      'Minnesota',
-      'Mississippi',
-      'Missouri',
-      'Montana',
-      'Nebraska',
-      'Nevada',
-      'New Hampshire',
-      'New Jersey',
-      'New Mexico',
-      'New York',
-      'North Carolina',
-      'North Dakota',
-      'Northern Mariana Islands',
-      'Ohio',
-      'Oklahoma',
-      'Oregon',
-      'Palau',
-      'Pennsylvania',
-      'Puerto Rico',
-      'Rhode Island',
-      'South Carolina',
-      'South Dakota',
-      'Tennessee',
-      'Texas',
-      'Utah',
-      'Vermont',
-      'Virgin Island',
-      'Virginia',
-      'Washington',
-      'West Virginia',
-      'Wisconsin',
-      'Wyoming',
+      'ไข่ดาว',
+      'ไข่เจียว',
+      'ต้มยำกุ้ง',
+      'กะเพราหมูสับ',
+      'เบอร์เกอร์',
+      'ก๋วยเตี๋ยว',
+    ],
+    breadcrumbs: [
+      {
+        text: 'หน้าแรก',
+        disabled: false,
+        href: '/',
+      },
+      {
+        text: 'ค้นหา',
+        disabled: true,
+        href: 'search',
+      },
     ],
     methods: {
       reserve() {

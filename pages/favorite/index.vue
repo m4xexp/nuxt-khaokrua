@@ -12,7 +12,7 @@
       "
     >
       <v-sheet color="white" height="150" class="sheet-fav-menu">
-        <v-breadcrumbs :items="items" style="position: absolute; left: 2em; top: 1em;">
+        <v-breadcrumbs :items="breadcrumbs" style="position: absolute; left: 2em; top: 1em;">
           <template v-slot:item="{ item }">
             <v-breadcrumbs-item :href="item.href" :disabled="item.disabled">
               {{ item.text.toUpperCase() }}
@@ -21,6 +21,8 @@
         </v-breadcrumbs>
         
         <h1 style="text-align: center">เมนูโปรด</h1>
+
+        <v-btn color="success" absolute outlined text style="right: 3em; top: 1em"><span>แก้ไข</span></v-btn>
       </v-sheet>
     </v-row>
 
@@ -214,7 +216,7 @@ export default {
       { tagName: 'Milk' },
       { tagName: 'Ice cream' },
     ],
-    items: [
+    breadcrumbs: [
       {
         text: 'หน้าแรก',
         disabled: false,

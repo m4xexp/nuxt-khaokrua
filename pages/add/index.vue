@@ -200,65 +200,12 @@ export default {
     isEditing: true,
     model: null,
     states: [
-      'Alabama',
-      'Alaska',
-      'American Samoa',
-      'Arizona',
-      'Arkansas',
-      'California',
-      'Colorado',
-      'Connecticut',
-      'Delaware',
-      'District of Columbia',
-      'Federated States of Micronesia',
-      'Florida',
-      'Georgia',
-      'Guam',
-      'Hawaii',
-      'Idaho',
-      'Illinois',
-      'Indiana',
-      'Iowa',
-      'Kansas',
-      'Kentucky',
-      'Louisiana',
-      'Maine',
-      'Marshall Islands',
-      'Maryland',
-      'Massachusetts',
-      'Michigan',
-      'Minnesota',
-      'Mississippi',
-      'Missouri',
-      'Montana',
-      'Nebraska',
-      'Nevada',
-      'New Hampshire',
-      'New Jersey',
-      'New Mexico',
-      'New York',
-      'North Carolina',
-      'North Dakota',
-      'Northern Mariana Islands',
-      'Ohio',
-      'Oklahoma',
-      'Oregon',
-      'Palau',
-      'Pennsylvania',
-      'Puerto Rico',
-      'Rhode Island',
-      'South Carolina',
-      'South Dakota',
-      'Tennessee',
-      'Texas',
-      'Utah',
-      'Vermont',
-      'Virgin Island',
-      'Virginia',
-      'Washington',
-      'West Virginia',
-      'Wisconsin',
-      'Wyoming',
+      'ไข่ดาว',
+      'ไข่เจียว',
+      'ต้มยำกุ้ง',
+      'กะเพราหมูสับ',
+      'เบอร์เกอร์',
+      'ก๋วยเตี๋ยว',
     ],
     methods: {
       reserve() {
@@ -289,14 +236,14 @@ export default {
 }
 
 .search-text-field {
-//   background-color: rgb(255, 255, 255);
+  //   background-color: rgb(255, 255, 255);
   width: 70%;
   padding: 10px;
-//   border-radius: 15px;
+  //   border-radius: 15px;
 }
 
-.v-sheet.v-card .search-text-field{
-    border-radius: 40px;
+.v-sheet.v-card .search-text-field {
+  border-radius: 40px;
 }
 
 .sheet-fav-menu {
