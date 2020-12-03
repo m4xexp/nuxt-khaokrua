@@ -68,17 +68,17 @@
       </div>
       <ul class="nav-menu">
         <li class="btn-add-recipe">
-          <a href="/favorite">
+          <nuxt-link to="/add">
             <v-icon>add</v-icon>
             <span>เพิ่มสูตรอาหาร</span>
-          </a>
+          </nuxt-link>
         </li>
 
         <li class="btn-fav-recipe">
-          <a href="/favorite">
+          <nuxt-link to="/favorite">
             <v-icon left>favorite</v-icon>
             <span>เมนูโปรด</span>
-          </a>
+          </nuxt-link>
         </li>
 
         <!-- Profile Menu -->
@@ -128,7 +128,7 @@
 
                     <v-divider class="my-3"></v-divider>
 
-                    <v-btn depressed rounded text href="#">
+                    <v-btn depressed rounded text href="/add">
                       <v-icon left>add</v-icon>
                       <span>เพิ่มสูตรอาหาร</span>
                     </v-btn>

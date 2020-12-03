@@ -260,7 +260,7 @@
             </v-card-text>
 
             <v-card-actions>
-              <v-btn block dark text style="background-color: green">
+              <v-btn block dark href="recipe/tomyum">
                 <span>ทำอาหาร</span>
               </v-btn>
             </v-card-actions>
@@ -305,6 +305,7 @@ export default {
         rate: 4.7,
         src:
           'https://d12man5gwydfvl.cloudfront.net/wp-content/uploads/2019/06/shutterstock_430308484.jpg',
+        link: "tomyum"
       },
       {
         Name: 'ข้าวผัด',

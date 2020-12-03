@@ -12,6 +12,14 @@
       "
     >
       <v-sheet color="white" height="150" class="sheet-fav-menu">
+        <v-breadcrumbs :items="items" style="position: absolute; left: 2em; top: 1em;">
+          <template v-slot:item="{ item }">
+            <v-breadcrumbs-item :href="item.href" :disabled="item.disabled">
+              {{ item.text.toUpperCase() }}
+            </v-breadcrumbs-item>
+          </template>
+        </v-breadcrumbs>
+        
         <h1 style="text-align: center">เมนูโปรด</h1>
       </v-sheet>
     </v-row>
@@ -26,7 +34,14 @@
           style="margin: 15px 15px; padding: 30px 30px; position: relative"
           id="card-add-recipe"
         >
-          <v-btn x-large elevation="5" icon raised class="icon-in-add-fav">
+          <v-btn
+            x-large
+            elevation="5"
+            icon
+            raised
+            class="icon-in-add-fav"
+            href="/search"
+          >
             <v-icon>add</v-icon>
           </v-btn>
           <v-card-title
@@ -35,7 +50,7 @@
           <v-card-action>
             <span class="footer-in-add-fav">
               <h5>----- หรือ -----</h5>
-              <a href="#">เพื่มสูตรของคุณเอง!</a>
+              <a href="/add">เพื่มสูตรของคุณเอง!</a>
             </span>
           </v-card-action>
         </v-card>
@@ -199,6 +214,18 @@ export default {
       { tagName: 'Milk' },
       { tagName: 'Ice cream' },
     ],
+    items: [
+      {
+        text: 'หน้าแรก',
+        disabled: false,
+        href: '/',
+      },
+      {
+        text: 'เมนูโปรด',
+        disabled: true,
+        href: 'favorite',
+      },
+    ],
     methods: {
       reserve() {
         this.loading = true
@@ -229,7 +256,7 @@ export default {
 
 .sheet-fav-menu {
   border-radius: 10px 10px 0px 0px;
-  padding: 80px;
+  padding: 50px;
   margin-top: 0 auto;
   width: 100%;
 }
