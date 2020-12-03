@@ -1,135 +1,129 @@
 <template>
-  <div class="home-container">
-    <v-row style="margin: 50px 20px auto; justify-content: center">
-        <v-card class="search-text-field" elevation="1">
-            <v-autocomplete
-              v-model="model"
-              hint="
-                เช่น ต้มยำกุ้ง, ข้าวผัด, ผัดกะเพราหมูสับไข่ดาว
-              "
-              :items="states"
-              :readonly="!isEditing"
-              label="ทำไรกินดีน้า"
-              persistent-hint
-              prepend-icon="search"
-            >
-            </v-autocomplete>
-          </v-card-text>
-        </v-card>
-    </v-row>
-
-    <v-row
-      no-gutters
-      class="md-6"
-      style="
-        width: 97%;
-        margin-left: 20px;
-        margin-top: 20px;
-        display: flex;
-        justify-content: center;
-      "
-    >
-      <v-sheet color="white" height="150" class="sheet-fav-menu">
-        <h1 style="text-align: left">ผลการค้นหา</h1>
+  <div class="add-container">
+    <v-row id="row-first" no-gutters class="md-6" justify="center">
+      <v-sheet color="white" height="100" class="header-sheet-add-menu">
+        <h1 style="text-align: center">เพิ่มสูตรอาหาร</h1>
       </v-sheet>
     </v-row>
 
-    <!-- Card menu -->
+    <v-row id="row-first" no-gutters class="md-6" justify="center">
+      <v-sheet class="sheet-add-menu">
+        <!-- For menu title and Description -->
 
-    <div class="menu-card-box">
-      <v-layout row wrap class="menu-card-cober-each-card">
-        <!-- Main favorite card -->
+        <div class="field-recipe-title">
+          <v-text-field
+            outlined
+            label="ชื่อเมนู"
+            append-icon="help_outline"
+          ></v-text-field>
+          <v-textarea outlined name="input-7-4" label="รายละเอียด"></v-textarea>
+        </div>
 
-        <v-flex
-          xs12
-          sm6
-          md4
-          lg3
-          v-for="recipe in menus"
-          :key="recipe.Name"
-          class="menu-card-each-card"
-        >
-          <!-- Card -->
+        <!-- For categlory -->
 
-          <v-card
-            :loading="loading"
-            class="mx-auto"
-            max-width="400"
-            id="card-recipe"
-          >
-            <template slot="progress">
-              <v-progress-linear
-                color="deep-purple"
-                height="10"
-                indeterminate
-              ></v-progress-linear>
-            </template>
+        <div class="field-recipe-categlories" style="height: 200px">
+          <span class="categlory-header">หมวดหมู่</span>
+          <v-divider style="margin: 5px 0px 20px 0px"></v-divider>
+          <div class="auto-tag-field">
+            <v-autocomplete
+              v-model="model"
+              chips
+              deletable-chips
+              outlined
+              multiple
+              :items="states"
+              :readonly="!isEditing"
+              label="ทำไรกินดีน้า"
+            >
+            </v-autocomplete>
+            <v-btn icon><v-icon>more_horiz</v-icon></v-btn>
+          </div>
+        </div>
 
-            <!-- Img for recipe card -->
+        <!-- For recipe data like prep time -->
 
-            <div class="card-recipe-zoom" style="overflow: hidden">
-              <v-img
-                class="card-recipe-img"
-                height="200"
-                :src="recipe.src"
-              ></v-img>
-            </div>
-
-            <div class="btn-fav-recipe">
-              <div>
-                <v-icon class="btn-fav-recipe-icon" style=""
-                  >favorite_border</v-icon
-                >
-              </div>
-            </div>
-
-            <v-card-title style="font-size: 28px">{{
-              recipe.Name
-            }}</v-card-title>
-
-            <v-card-text class="card-data">
-              <div class="box-card-data">
-                <div class="card-data-cook-time">
-                  <v-icon left>schedule</v-icon>
-                  <span style="vertical-align: middle"
-                    >{{ recipe.time }} ชั่วโมง</span
-                  >
-                </div>
-                <div class="card-data-cook-time" style="margin-left: 15px">
-                  <v-icon left>group</v-icon>
-                  <span style="vertical-align: middle">สำหรับ 2 ที่</span>
-                </div>
-              </div>
-
-              <v-row align="center" class="mx-0">
-                <v-rating
-                  :value="recipe.rate"
-                  color="amber"
-                  dense
-                  half-increments
-                  readonly
-                  size="14"
-                ></v-rating>
-
-                <div class="grey--text ml-4">{{ recipe.rate }} (413)</div>
-              </v-row>
-            </v-card-text>
-
-            <v-card-actions>
+        <div class="field-recipe-detail">
+          <div class="div-card-add-recipe-img">
+            <v-card
+              class="mx-auto"
+              max-width="400"
+              style="
+                margin-top: 15px;
+                margin-left: 100px;
+                padding: 30px 30px;
+                position: relative;
+              "
+              id="card-add-recipe-img"
+              height="200px"
+              width="240px"
+            >
               <v-btn
-                block
-                dark
-                text
-                @click="reserve"
-                style="background-color: #ff7043"
+                x-large
+                elevation="5"
+                icon
+                raised
+                class="icon-in-add-fav"
+                href="/search"
               >
-                <span>ทำอาหาร</span>
+                <v-icon>add</v-icon>
               </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </div>
+              <v-card-title
+                ><span class="text-in-add-fav">เพิ่มรูปภาพ</span>
+              </v-card-title>
+            </v-card>
+          </div>
+
+          <div class="all-data" style="display: block">
+            <div class="recipe-data">
+              <span>เวลาเตรียม :</span>
+              <div class="prep-time">
+                <div class="prep-time-input">
+                  <v-text-field solo> </v-text-field>
+                </div>
+                <div class="prep-time-select">
+                  <v-text-field solo> </v-text-field>
+                </div>
+              </div>
+            </div>
+            <div class="recipe-data">
+              <span>เวลาทำอาหาร :</span>
+              <div class="cook-time">
+                <div class="cook-time-input">
+                  <v-text-field solo> </v-text-field>
+                </div>
+                <div class="cook-time-select">
+                  <v-text-field solo> </v-text-field>
+                </div>
+              </div>
+            </div>
+
+            <v-divider class="divider-between-prep"></v-divider>
+
+            <div class="recipe-data">
+              <span>เสิร์ฟ :</span>
+              <div class="for-serve">
+                <div class="serve-input">
+                  <v-text-field solo> </v-text-field>
+                </div>
+              </div>
+            </div>
+            <div class="recipe-data" style="display: block">
+              <span>จำนวน :</span>
+              <div class="for-yield">
+                <div class="yield-input">
+                  <v-text-field solo> </v-text-field>
+                </div>
+                <div class="yield-select">
+                  <v-text-field solo> </v-text-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field-recipe-ingrediants"></div>
+        <div class="field-recipe-step"></div>
+      </v-sheet>
+    </v-row>
   </div>
 </template>
 
@@ -229,156 +223,196 @@ export default {
   box-sizing: border-box;
 }
 
-.home-container {
-  margin: 5px auto;
+#row-header {
+  width: 97%;
+  margin-left: 20px;
+  display: flex;
+}
+
+#row-container {
+  width: 97%;
+  margin-left: 20px;
+  display: flex;
+}
+
+.add-container {
+  margin: 15px auto;
   width: 90%;
   position: relative;
 }
 
-.search-text-field {
-  //   background-color: rgb(255, 255, 255);
-  width: 70%;
-  padding: 10px;
-  //   border-radius: 15px;
-}
-
-.v-sheet.v-card .search-text-field {
-  border-radius: 40px;
-}
-
-.sheet-fav-menu {
+.header-sheet-add-menu {
   border-radius: 10px 10px 0px 0px;
-  padding: 80px;
-  margin-top: 0 auto;
   width: 100%;
+  padding: 20px;
 }
 
-.icon-in-add-fav {
-  position: absolute;
-  text-align: center;
+.sheet-add-menu {
+  border-radius: 0px 0px 0px 0px;
   width: 100%;
-  left: 50%;
-  right: 50%;
-  transform: translate(-50%, -50%);
-  top: 40%;
+  padding: 20px;
 }
 
-.text-in-add-fav {
-  position: absolute;
-  text-align: center;
-  width: 100%;
-  left: 50%;
-  right: 50%;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  font-weight: bold;
+.auto-tag-field {
+  height: 70px;
+  display: flex;
+  position: relative;
+}
+
+.categlory-header {
+  font-size: 45px;
   margin: 20px auto;
 }
 
-.menu-card-cober-each-card .menu-card-each-card {
-  padding: 15px 15px 15px 15px;
-}
-
-.menu-card-each-card .btn-fav-recipe .btn-fav-recipe-icon {
-  position: absolute;
-  left: 80%;
-  bottom: 43%;
-  background: red;
-  color: white;
-  font-size: 1.2em;
-  font-weight: bold;
-  padding: 15px;
-  border-radius: 50%;
-  transition: 0.3s ease-in-out;
-}
-
-.menu-card-each-card .btn-fav-recipe .btn-fav-recipe-icon:hover {
-  transform: scale(1.1);
-}
-
-.header-menu-card-box {
-  background-color: white;
-  height: 150px;
-  margin-top: 50px;
-  padding: 20px;
-  border-radius: 10px 10px 0px 0px;
-  width: 30%;
-}
-
-.header-menu-card-box .header-text {
-  margin: 30px auto;
-  background-color: white;
-  text-align: center;
-}
-
-#card-recipe {
-  transition: 0.25s ease;
-  overflow: hidden;
-  // cursor: pointer;
-}
-
-#card-recipe:hover {
-  transform: scale(1.05);
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
-}
-
-#card-recipe .card-recipe-img {
-  transition: 0.25s ease;
-}
-
-#card-recipe:hover .card-recipe-img {
-  transform: scale(1.2);
-}
-
-.menu-card-box {
-  background-color: white;
-  margin-left: 20px;
-  margin-right: 20px;
-  padding: 20px;
-}
-
-.card-data .box-card-data {
+.field-recipe-detail {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-around;
+}
+
+.field-recipe-detail .all-data {
+  width: 50%;
+}
+
+.recipe-data {
+  display: block;
+}
+
+.recipe-data .prep-time {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.prep-time .prep-time-input {
+  width: 20%;
+  margin-left: 20px;
+}
+
+.prep-time-select {
+  width: 65%;
+  margin-right: 40px;
+}
+
+.recipe-data .cook-time {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.cook-time .cook-time-input {
+  width: 20%;
+  margin-left: 20px;
+}
+
+.cook-time-select {
+  width: 65%;
+  margin-right: 40px;
+}
+
+.recipe-data .for-serve {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.serve-input {
+  width: 20%;
+  margin-left: 20px;
+}
+
+.recipe-data .for-yield {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.yield-input {
+  width: 20%;
+  margin-left: 20px;
+}
+
+.yield-select {
+  width: 65%;
+  margin-right: 40px;
+}
+
+.divider-between-prep {
   margin: 10px auto;
+  margin-bottom: 25px;
+  width: 90%;
 }
 
-@media only screen and (max-width: 376px) {
-  #card-add-recipe {
-    width: 250px;
-  }
-}
-
-@media only screen and (max-width: 376px) {
-  .sheet-fav-menu {
-    margin-right: 30px;
-    width: 91%;
-  }
-}
-
-@media only screen and (max-width: 1920px) {
-  #card-add-recipe {
-    width: 300px;
-  }
-}
-
-@media only screen and (max-width: 1024px) {
-  #card-add-recipe {
-    width: 258.52px;
-  }
-}
-
-@media only screen and (max-width: 1024px) {
-  .sheet-fav-menu {
-    margin-right: 15px;
-    width: 99%;
-  }
+.div-card-add-recipe-img {
+  margin-left: 40px;
 }
 
 @media only screen and (max-width: 768px) {
-  #card-add-recipe {
-    width: 287.6px;
+  #card-add-recipe-img {
+    width: 200px;
   }
+  .div-card-add-recipe-img {
+    margin-left: 20px;
+  }
+  .yield-select {
+    margin-right: 20px;
+  }
+  .serve-select {
+    margin-right: 20px;
+  }
+  .cook-time-select {
+    margin-right: 20px;
+  }
+  .prep-time-select {
+    margin-right: 20px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  #card-add-recipe-img {
+    width: 200px;
+  }
+  .div-card-add-recipe-img {
+    margin-left: 20px;
+  }
+  .yield-select {
+    margin-right: 20px;
+  }
+  .serve-select {
+    margin-right: 20px;
+  }
+  .cook-time-select {
+    margin-right: 20px;
+  }
+  .prep-time-select {
+    margin-right: 20px;
+  }
+}
+
+@media only screen and (max-width: 376px) {
+  #card-add-recipe-img {
+    width: 200px;
+  }
+  .div-card-add-recipe-img {
+    margin: 25px auto;
+  }
+  .yield-select {
+    margin-right: 20px;
+  }
+  .serve-select {
+    margin-right: 20px;
+  }
+  .cook-time-select {
+    margin-right: 20px;
+  }
+  .prep-time-select {
+    margin-right: 20px;
+  }
+  .field-recipe-detail .all-data {
+    width: 100%;
+  }
+  .field-recipe-detail {
+  display: block;
+}
 }
 </style>
 

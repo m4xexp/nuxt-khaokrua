@@ -1,5 +1,5 @@
 <template>
-  <div class="home-container">
+  <div class="fav-container">
     <v-row
       no-gutters
       class="md-6"
@@ -250,7 +250,7 @@ export default {
   box-sizing: border-box;
 }
 
-.home-container {
+.fav-container {
   margin: 5px auto;
   width: 90%;
   position: relative;
