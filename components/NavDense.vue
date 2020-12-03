@@ -68,17 +68,17 @@
       </div>
       <ul class="nav-menu">
         <li class="btn-add-recipe">
-          <v-btn left text>
+          <a href="/favorite">
             <v-icon>add</v-icon>
             <span>เพิ่มสูตรอาหาร</span>
-          </v-btn>
+          </a>
         </li>
 
         <li class="btn-fav-recipe">
-          <v-btn left text>
+          <a href="/favorite">
             <v-icon left>favorite</v-icon>
             <span>เมนูโปรด</span>
-          </v-btn>
+          </a>
         </li>
 
         <!-- Profile Menu -->
@@ -281,6 +281,15 @@ export default {
 
 span {
   vertical-align: middle;
+}
+
+ul li a{
+  text-decoration: none
+}
+
+li a span {
+  font-size: 16px;
+  color: rgb(255, 255, 255);
 }
 
 .header-nav-menu .nav-menu .btn-add-recipe {
