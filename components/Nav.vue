@@ -18,8 +18,8 @@
       <!-- Logo KhaoKrua -->
 
       <div class="header-nav-logo">
+        <nuxt-link to="/">
         <div class="nav-logo">
-          <nuxt-link to="/">
             <v-img
               alt="khaokrua Logo"
               class="shrink mr-2"
@@ -28,8 +28,8 @@
               transition="scale-transition"
               width="360"
             />
-          </nuxt-link>
         </div>
+        </nuxt-link>
       </div>
 
       <div class="header-nav-logo">
@@ -202,6 +202,10 @@ export default {
   padding: 0;
   list-style: none;
   box-sizing: border-box;
+}
+
+.header-nav {
+  overflow: hidden;
 }
 
 .header-nav-logo {

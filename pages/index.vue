@@ -367,14 +367,15 @@ export default {
       { tagName: 'Milk' },
       { tagName: 'Ice cream' },
     ],
-    methods: {
+    
+  }),
+  methods: {
       reserve () {
         this.loading = true
 
         setTimeout(() => (this.loading = false), 2000)
       },
     },
-  }),
 }
 </script>
 

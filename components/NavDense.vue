@@ -30,7 +30,7 @@
       </div>
 
       <div class="header-nav-logo">
-        <nuxt-link to="/" style="bacground-color: black">
+        <nuxt-link to="/">
           <div class="nav-logo">
             <v-img
               alt="khaokrua Logo"
@@ -199,6 +199,9 @@ export default {
   padding: 0;
   list-style: none;
   box-sizing: border-box;
+}
+.header-nav {
+  overflow: hidden;
 }
 
 .header-nav-logo {

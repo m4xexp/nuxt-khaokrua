@@ -1,7 +1,9 @@
 <template>
   <v-app light style="background-color: #e4e5e5">
-    <Nav v-if="false"/>
-    <NavDense v-if="true"/>
+    <v-nav>
+      <Nav v-if="false" />
+      <NavDense v-if="true" />
+    </v-nav>
     <v-main>
       <nuxt />
     </v-main>
