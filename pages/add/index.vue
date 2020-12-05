@@ -12,11 +12,15 @@
 
         <div class="wraper-sheet-add-menu">
           <div class="field-recipe-title">
-            <v-text-field
-              outlined
-              label="ชื่อเมนู"
-              append-icon="help_outline"
-            ></v-text-field>
+            <div style="display: flex">
+              <v-text-field
+                outlined
+                label="ชื่อเมนู"
+                append-icon="help_outline"
+              >
+              </v-text-field>
+            </div>
+
             <v-textarea
               outlined
               name="input-7-4"
@@ -118,8 +122,7 @@
                 <span>จำนวน :</span>
                 <div class="for-yield">
                   <div class="yield-input">
-                    <v-text-field solo placeholder="---">
-                    </v-text-field>
+                    <v-text-field solo placeholder="---"> </v-text-field>
                   </div>
                   <div class="yield-select">
                     <v-text-field solo> </v-text-field>
@@ -131,20 +134,46 @@
           <div class="field-recipe-ingredients">
             <span class="ingredients-header">ส่วนผสม</span>
             <v-divider style="margin: 5px 0px 20px 0px"></v-divider>
-            <v-sheet v-if="tasks.length > 0">
-              <v-slide-y-transition class="py-0" group tag="v-list">
-                <template v-for="task in tasks">
+            <v-sheet
+              class="sheet-ingredients"
+              v-for="(task, index) in tasks"
+              :key="task.id"
+            >
+              <div class="ingredients-field" style="position: relative">
+                <div
+                  class="ingredient-item-label"
+                  v-if="!task.editing"
+                  @dblclick="edit(task)"
+                >
+                  <v-divider
+                    v-if="index !== 0"
+                    :key="`${index}-divider`"
+                    style="margin: 15px 0px 15px 0px; width: 100%"
+                  ></v-divider>
+
+                  <div class="text-label" style="display: flex; justify-content: space-between">
+                    <span style="margin-left: 10px">{{ task.text }}</span>
+                    <span class="delete-ingredient" @click="deleteIngredient"><v-icon>delete</v-icon></span>
+                  </div>
+                </div>
+
+                <div v-else class="ingredient-item-edit">
                   <v-text-field
-                    v-if="task.text"
-                    :key="`${task}`"
-                    :value="task.text"
-                    clearable
+                    
                     outlined
-                    ></v-text-field
-                  >
-                </template>
-              </v-slide-y-transition>
+                    clearable
+                    
+                    focusable
+                    @blur="doneEdit(task)"
+                    @keydown.enter="doneEdit(task)"
+                    v-model="task.text"
+                    style="margin: 0px"
+                  ></v-text-field>
+                </div>
+                
+              </div>
             </v-sheet>
+
             <v-textarea
               v-model="newTask"
               outlined
@@ -152,45 +181,12 @@
               label="รายละเอียด"
               clearable
               @keydown.enter="create"
+              style="margin-top: 25px"
             ></v-textarea>
           </div>
           <div class="field-recipe-ingredients">
             <span class="ingredients-header">วิธีทำ</span>
             <v-divider style="margin: 5px 0px 20px 0px"></v-divider>
-            <v-card v-if="tasks.length > 0">
-              <v-slide-y-transition class="py-0" group tag="v-list">
-                <template v-for="(task, i) in tasks">
-                  <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
-
-                  <v-list-item :key="`${i}-${task.text}`">
-                    <v-list-item-action>
-                      <v-checkbox
-                        v-model="task.done"
-                        :color="(task.done && 'grey') || 'primary'"
-                      >
-                        <template v-slot:label>
-                          <div
-                            :class="
-                              (task.done && 'grey--text') || 'primary--text'
-                            "
-                            class="ml-4"
-                            v-text="task.text"
-                          ></div>
-                        </template>
-                      </v-checkbox>
-                    </v-list-item-action>
-
-                    <v-spacer></v-spacer>
-
-                    <v-scroll-x-transition>
-                      <v-icon v-if="task.done" color="success">
-                        mdi-check
-                      </v-icon>
-                    </v-scroll-x-transition>
-                  </v-list-item>
-                </template>
-              </v-slide-y-transition>
-            </v-card>
             <v-textarea
               outlined
               v-model="newTask"
@@ -253,34 +249,54 @@ export default {
       },
     ],
     ingredient: null,
-    tasks: [],
+    idTask: 3,
+    tasks: [
+      {
+        id: 1,
+        done: false,
+        text: 55555,
+        editing: false,
+      },
+      {
+        id: 2,
+        done: false,
+        text: 66666,
+        editing: false,
+      },
+    ],
     newTask: null,
   }),
 
   methods: {
-    addIngredients() {
-      this.ingredient.push({
-        done: false,
-        text: this.ingredient,
-      })
-
-      this.ingredient = null
-    },
-
     create() {
+
       this.tasks.push({
+        id: this.idTask,
         done: false,
         text: this.newTask,
+        editing: false,
       })
-      console.log('create recipe')
 
+      this.idTask++
+      console.log(this.task)
       this.newTask = null
+    },
+
+    deleteIngredient(task){
+      this.tasks.splice(task.index,1)
+    },
+
+    edit(task) {
+      task.editing = true
+    },
+    doneEdit(task) {
+      task.editing = false
     },
   },
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scope>
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap');
 
 * {
@@ -309,9 +325,9 @@ export default {
   position: relative;
 }
 
-.wraper-sheet-add-menu{
-    width: 80%;
-  }
+.wraper-sheet-add-menu {
+  width: 80%;
+}
 
 .header-sheet-add-menu {
   border-radius: 10px 10px 0px 0px;
@@ -442,6 +458,23 @@ export default {
   margin-left: 20px;
 }
 
+.ingredient-item-label {
+  font-size: 16px;
+}
+
+.delete-ingredient{
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+  &:hover{
+    transform: scale(1.2);
+  }
+}
+
+.ingredient-item-edit{
+  width: 100%;
+  margin-top: 15px;
+}
+
 @media only screen and (max-width: 960px) {
   #card-add-recipe-img {
     width: 200px;
@@ -488,10 +521,10 @@ export default {
   #card-add-recipe-img {
     width: 200px;
   }
-  .wraper-sheet-add-menu{
+  .wraper-sheet-add-menu {
     width: 100%;
   }
-  
+
   .div-card-add-recipe-img {
     margin: 25px auto;
   }
