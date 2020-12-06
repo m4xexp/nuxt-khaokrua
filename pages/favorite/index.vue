@@ -375,7 +375,7 @@ export default {
   margin: 10px auto;
 }
 
-@media only screen and (max-width: 376px) {
+@media only screen and (max-width: 600px) {
   .sheet-fav-menu {
     width: 100%;
   }

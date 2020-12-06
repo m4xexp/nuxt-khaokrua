@@ -45,9 +45,9 @@
           <!-- End Author box -->
           <div class="recipe-share-area">
             <div class="share-button">
-              <v-btn icon><v-icon>fa4</v-icon></v-btn>
-              <v-btn color="warning">text</v-btn>
-              <v-btn color="primary">text</v-btn>
+              <i class="fab fa-facebook"></i>
+              <v-btn><i class="fab fa-facebook"></i></v-btn>
+              <v-btn color="primary"><v-icon>fab fa-facebook</v-icon></v-btn>
             </div>
           </div>
         </div>
@@ -55,7 +55,59 @@
     </v-row>
 
     <v-row no-gutters class="md-6">
-      <v-sheet class="content-sheet-recipe-menu"> </v-sheet>
+      <v-sheet class="content-sheet-recipe-menu">
+        <div class="wrapper-recipe-card">
+          <v-card max-width="600">
+            <div class="recipe-img" style="overflow: hidden">
+              <v-img
+                src="https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000352/img/basic/a0000352_main.jpg?20200520115732&q=80&rw=750&rh=536"
+              >
+              </v-img>
+            </div>
+          </v-card>
+        </div>
+        <div class="wraper-addto-fav-icon">
+          <v-btn class="addto-fav-icon" color="success"
+            ><span><v-icon>favorite_border</v-icon></span>
+            เพิ่มในเมนูโปรด</v-btn
+          >
+        </div>
+      </v-sheet>
+    </v-row>
+
+    <v-row no-gutters class="md-6" id="wraper-data-recipe">
+      <v-col>
+        <div class="data-recipe">
+          <v-sheet class="data-sheet-recipe-menu">
+            <div class="data-time-recipe">
+              <div class="data-prep-time">
+                <span class="prep-time">เวลาเตรียม :</span>
+                <span href="#">1 ชั่วโมง</span>
+              </div>
+              <div class="data-cook-time">
+                <span class="cook-time">เวลาทำอาหาร :</span>
+                <span href="#">1 ชั่วโมง</span>
+              </div>
+            </div>
+            <div class="data-serve-recipe">
+              <div class="data-serve">
+                <span class="serve-no">เสิร์ฟ :</span>
+                <span href="#">1 ที่</span>
+              </div>
+              <div class="data-yield">
+                <span class="yield-no">จำนวน :</span>
+                <span >1 ชิ้น</span>
+              </div>
+            </div>
+          </v-sheet>
+        </div>
+        <div class="ingredient-recipe">
+          <v-sheet class="ingredient-sheet-recipe-menu"> </v-sheet>
+        </div>
+      </v-col>
+      <v-col>
+        <v-sheet class="direction-sheet-recipe-menu"> </v-sheet>
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -145,7 +197,7 @@ export default {
 .content-sheet-recipe-menu {
   border-radius: 10px 10px 0px 0px;
   width: 100%;
-  height: 360px;
+  height: 550px;
   padding: 20px;
   margin-top: 30px;
 }
@@ -160,8 +212,102 @@ export default {
   background-repeat: repeat-y;
 }
 
-.share-button{
+.share-button {
   margin: 40px;
+}
+
+.wrapper-recipe-card {
+  margin: 20px auto;
+  width: 70%;
+  display: flex;
+  justify-content: center;
+}
+
+.wraper-addto-fav-icon {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  margin: 20px auto;
+}
+
+// addto-fav-icon{
+//   display: flex;
+//   justify-content: center;
+//   width: 50%;
+//   margin: 20px auto;
+// }
+
+#wraper-data-recipe {
+  margin-top: 40px;
+}
+
+.data-recipe {
+  display: flex;
+  flex-direction: column;
+}
+
+.data-sheet-recipe-menu {
+  width: 95%;
+  border-radius: 10px;
+  padding: 20px;
+  height: 150px;
+  margin-bottom: 30px;
+  display: block;
+}
+
+.data-sheet-recipe-menu div > div {
+  padding: 10px;
+}
+
+
+.data-time-recipe {
+  display: flex;
+}
+
+.data-prep-time {
+  width: 50%;
+  text-align: left;
+  padding: 10px;
+  border-right: 1px solid #606060;
+  border-bottom: 1px solid #606060;
+}
+
+.data-cook-time {
+  width: 50%;
+  text-align: right;
+  border-bottom: 1px solid #606060;
+}
+
+.data-serve {
+  width: 50%;
+  
+  text-align: left;
+  border-right: 1px solid #606060;
+}
+
+.data-yield {
+  width: 50%;
+  text-align: right;
+
+  
+}
+
+.data-serve-recipe {
+  display: flex;
+}
+
+.ingredient-sheet-recipe-menu {
+  width: 100%;
+  border-radius: 10px 0px 0px 10px;
+  padding: 20px;
+  height: 350px;
+}
+
+.direction-sheet-recipe-menu {
+  width: 100%;
+  border-radius: 10px;
+  padding: 20px;
+  height: 500px;
 }
 
 @media only screen and (max-width: 1264px) {
@@ -198,6 +344,9 @@ export default {
   .author-box {
     margin: 0 auto;
     width: 100%;
+  }
+  .recipe-share-area {
+    display: none;
   }
 }
 </style>

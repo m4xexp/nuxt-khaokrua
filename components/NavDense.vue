@@ -7,6 +7,8 @@
       dark
       class="header-nav"
       height="280px"
+      shrink-on-scroll
+      fade-img-on-scroll
       src="https://firebasestorage.googleapis.com/v0/b/khaokrua-e8479.appspot.com/o/cover_khaokrua.jpg?alt=media&token=7ba8172c-25e6-4585-8dde-9b108eb98054"
     >
       <div class="header-nav-icon">
