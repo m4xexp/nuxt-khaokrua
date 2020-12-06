@@ -10,7 +10,7 @@
           </template>
         </v-breadcrumbs>
 
-        <h1 class="header-recipe-text">เมนูโปรด</h1>
+        <h1 class="header-recipe-text">บัวลอยไข่หวาน</h1>
 
         <div class="recipe-header-info">
           <div class="author-box">
@@ -57,10 +57,10 @@
     <v-row no-gutters class="md-6">
       <v-sheet class="content-sheet-recipe-menu">
         <div class="wrapper-recipe-card">
-          <v-card max-width="600">
+          <v-card max-width="400">
             <div class="recipe-img" style="overflow: hidden">
               <v-img
-                src="https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000352/img/basic/a0000352_main.jpg?20200520115732&q=80&rw=750&rh=536"
+                src="https://img.kapook.com/u/2017/wanwanat/93_bualoy/loy4_1.jpg"
               >
               </v-img>
             </div>
@@ -96,17 +96,43 @@
               </div>
               <div class="data-yield">
                 <span class="yield-no">จำนวน :</span>
-                <span >1 ชิ้น</span>
+                <span>1 ชิ้น</span>
               </div>
             </div>
           </v-sheet>
         </div>
         <div class="ingredient-recipe">
-          <v-sheet class="ingredient-sheet-recipe-menu"> </v-sheet>
+          <v-sheet class="ingredient-sheet-recipe-menu">
+            <span class="ingredients-header-recipe">ส่วนผสม</span>
+            <v-divider style="margin: 5px 0px 20px 0px"></v-divider>
+            <v-sheet v-for="(ingr, index) in Ingreds" :key="ingr.ingrNO">
+            <v-divider
+              v-if="index !== 0"
+              :key="`${index}-divider`"
+              style="margin: 15px 0px 15px 0px; width: 100%"
+            ></v-divider>
+            <div style="display: flex; justify-content: space-between">
+              <span>{{ingr.ingred}}</span>
+              <span>{{ingr.unit}}</span>
+            </div>
+            
+          </v-sheet>
+          </v-sheet>
         </div>
       </v-col>
       <v-col>
-        <v-sheet class="direction-sheet-recipe-menu"> </v-sheet>
+        <v-sheet class="direction-sheet-recipe-menu">
+          <span class="direction-header-recipe">วิธีทำ</span>
+          <v-divider style="margin: 5px 0px 20px 0px"></v-divider>
+          <v-sheet v-for="(Direct, index) in Directs" :key="Direct.stepNo">
+            <v-divider
+              v-if="index !== 0"
+              :key="`${index}-divider`"
+              style="margin: 15px 0px 15px 0px; width: 100%"
+            ></v-divider>
+            <span>{{Direct.step}}</span>
+          </v-sheet>
+        </v-sheet>
       </v-col>
     </v-row>
   </div>
@@ -125,6 +151,73 @@ export default {
         text: 'เมนู',
         disabled: true,
         href: 'favorite',
+      },
+    ],
+    Ingreds: [
+      {
+        ingrNO: 1,
+        ingred: 'แป้งข้าวเหนียว',
+        unit: '1 ถ้วย'
+      },
+      {
+        ingrNO: 2,
+        ingred: 'น้ำเปล่า',
+        unit: '1/4 ถ้วย'
+      },
+      {
+        ingrNO: 3,
+        ingred: 'เผือกนึ่งสุก',
+        unit: ''
+      },
+      {
+        ingrNO: 4,
+        ingred: 'ฟักทองนึ่งสุก',
+        unit: ''
+      },
+      {
+        ingrNO: 5,
+        ingred: 'น้ำใบเตยคั้นเข้มข้น',
+        unit: ''
+      },
+      {
+        ingrNO: 6,
+        ingred: 'กะทิ',
+        unit: '1 ถ้วย'
+      },
+      {
+        ingrNO: 7,
+        ingred: 'น้ำตาลทราย',
+        unit: '1 ถ้วย'
+      },
+      {
+        ingrNO: 8,
+        ingred: 'เกลือป่น',
+        unit: '1 ช้อนชา'
+      },
+      {
+        ingrNO: 9,
+        ingred: 'ไข่ไก่',
+        unit: '1 ฟอง'
+      },
+
+
+    ],
+    Directs: [
+      {
+        stepNo: 1,
+        step: 'แบ่งแป้งออกเป็น 3 ส่วน ส่วนที่ 1 นวดผสมแป้งกับน้ำเปล่าและเผือกนึ่งสุก ส่วนที่ 2 นวดแป้งกับน้ำเปล่าและฟักทองนึ่งสุก ส่วนที่ 3 นวดแป้งกับน้ำใบเตย นวดผสมจนเข้ากันเป็นเนื้อเดียว ปั้นเป็นก้อนกลม ๆ แล้วนำไปคลุกแป้งข้าวเหนียวบาง ๆ เตรียมไว้ ',
+      },
+      {
+        stepNo: 2,
+        step: 'ใส่น้ำกะทิลงในหม้อ เติมน้ำตาลทรายและเกลือป่นคนผสมจนละลาย นำขึ้นตั้งไฟพอเดือด รีบปิดไฟ เตรียมไว้',
+      },
+      {
+        stepNo: 3,
+        step: 'ต้มน้ำเปล่าในหม้อจนเดือด นำบัวลอยลงต้มทีละสีจนลอยขึ้นมา จากนั้นตักขึ้นสะเด็ดน้ำ ใส่ลงในถ้วย ตักกะทิที่เตรียมไว้ใส่ลงไป',
+      },
+      {
+        stepNo: 4,
+        step: 'ตอกไข่ไก่ใส่ถ้วย ค่อย ๆ เทลงในหม้อน้ำกะทิ รอจนไข่สุกตามชอบ จากนั้นตักใส่ลงในถ้วยบัวลอย พร้อมเสิร์ฟ',
       },
     ],
   }),
@@ -259,7 +352,6 @@ export default {
   padding: 10px;
 }
 
-
 .data-time-recipe {
   display: flex;
 }
@@ -280,7 +372,7 @@ export default {
 
 .data-serve {
   width: 50%;
-  
+
   text-align: left;
   border-right: 1px solid #606060;
 }
@@ -288,8 +380,6 @@ export default {
 .data-yield {
   width: 50%;
   text-align: right;
-
-  
 }
 
 .data-serve-recipe {
@@ -300,14 +390,22 @@ export default {
   width: 100%;
   border-radius: 10px 0px 0px 10px;
   padding: 20px;
-  height: 350px;
+}
+
+.ingredients-header-recipe {
+  font-weight: bold;
+  font-size: 26px;
 }
 
 .direction-sheet-recipe-menu {
   width: 100%;
   border-radius: 10px;
   padding: 20px;
-  height: 500px;
+}
+
+.direction-header-recipe {
+  font-weight: bold;
+  font-size: 26px;
 }
 
 @media only screen and (max-width: 1264px) {

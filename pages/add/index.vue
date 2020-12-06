@@ -2,7 +2,11 @@
   <div class="add-container">
     <v-row id="row-first" no-gutters class="md-6" justify="center">
       <v-sheet color="white" height="150" class="header-sheet-add-menu">
-        <v-breadcrumbs :items="breadcrumbs" style="position: absolute; left: 0px; top: 0px;" large>
+        <v-breadcrumbs
+          :items="breadcrumbs"
+          style="position: absolute; left: 0px; top: 0px"
+          large
+        >
           <template v-slot:item="{ item }">
             <v-breadcrumbs-item :href="item.href" :disabled="item.disabled">
               {{ item.text.toUpperCase() }}
