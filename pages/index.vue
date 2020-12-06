@@ -113,7 +113,8 @@
                 block
                 dark
                 text
-                @click="reserve"
+                link
+                to="/recipe"
                 style="background-color: #ff7043"
               >
                 <span>ทำอาหาร</span>
@@ -237,6 +238,9 @@ export default {
 
       setTimeout(() => (this.loading = false), 2000)
     },
+    letCook() {
+
+    }
   },
 }
 </script>
@@ -416,7 +420,7 @@ export default {
     width: 100%;
   }
   .header-text{
-    font-size: 34px;
+    font-size: 28px;
   }
   .menu-card-box{
     border-radius: 10px 10px 0px 0px;

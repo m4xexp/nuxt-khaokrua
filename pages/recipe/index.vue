@@ -57,8 +57,8 @@
     <v-row no-gutters class="md-6">
       <v-sheet class="content-sheet-recipe-menu">
         <div class="wrapper-recipe-card">
-          <v-card max-width="400">
-            <div class="recipe-img" style="overflow: hidden">
+          <v-card class="recipe-card-img" max-width="400">
+            <div class="recipe-img">
               <v-img
                 src="https://img.kapook.com/u/2017/wanwanat/93_bualoy/loy4_1.jpg"
               >
@@ -76,27 +76,37 @@
     </v-row>
 
     <v-row no-gutters class="md-6" id="wraper-data-recipe">
-      <v-col>
+      <div class="recipe-share-area-res">
+        <v-sheet class="sheet-recipe-share-area">
+          <div class="share-button">
+            <i class="fab fa-facebook"></i>
+            <v-btn><i class="fab fa-facebook"></i></v-btn>
+            <v-btn color="primary"><v-icon>fab fa-facebook</v-icon></v-btn>
+          </div>
+        </v-sheet>
+      </div>
+
+      <v-col class="col-ingredients">
         <div class="data-recipe">
           <v-sheet class="data-sheet-recipe-menu">
             <div class="data-time-recipe">
               <div class="data-prep-time">
                 <span class="prep-time">เวลาเตรียม :</span>
-                <span href="#">1 ชั่วโมง</span>
+                <span class="no-data" href="#">1 ชั่วโมง</span>
               </div>
               <div class="data-cook-time">
                 <span class="cook-time">เวลาทำอาหาร :</span>
-                <span href="#">1 ชั่วโมง</span>
+                <span class="no-data" href="#">1 ชั่วโมง</span>
               </div>
             </div>
             <div class="data-serve-recipe">
               <div class="data-serve">
                 <span class="serve-no">เสิร์ฟ :</span>
-                <span href="#">1 ที่</span>
+                <span class="no-data" href="#">1 ที่</span>
               </div>
               <div class="data-yield">
                 <span class="yield-no">จำนวน :</span>
-                <span>1 ชิ้น</span>
+                <span class="no-data">1 ชิ้น</span>
               </div>
             </div>
           </v-sheet>
@@ -106,21 +116,20 @@
             <span class="ingredients-header-recipe">ส่วนผสม</span>
             <v-divider style="margin: 5px 0px 20px 0px"></v-divider>
             <v-sheet v-for="(ingr, index) in Ingreds" :key="ingr.ingrNO">
-            <v-divider
-              v-if="index !== 0"
-              :key="`${index}-divider`"
-              style="margin: 15px 0px 15px 0px; width: 100%"
-            ></v-divider>
-            <div style="display: flex; justify-content: space-between">
-              <span>{{ingr.ingred}}</span>
-              <span>{{ingr.unit}}</span>
-            </div>
-            
-          </v-sheet>
+              <v-divider
+                v-if="index !== 0"
+                :key="`${index}-divider`"
+                style="margin: 15px 0px 15px 0px; width: 100%"
+              ></v-divider>
+              <div style="display: flex; justify-content: space-between">
+                <span>{{ ingr.ingred }}</span>
+                <span>{{ ingr.unit }}</span>
+              </div>
+            </v-sheet>
           </v-sheet>
         </div>
       </v-col>
-      <v-col>
+      <v-col class="col-direction">
         <v-sheet class="direction-sheet-recipe-menu">
           <span class="direction-header-recipe">วิธีทำ</span>
           <v-divider style="margin: 5px 0px 20px 0px"></v-divider>
@@ -130,10 +139,22 @@
               :key="`${index}-divider`"
               style="margin: 15px 0px 15px 0px; width: 100%"
             ></v-divider>
-            <span>{{Direct.step}}</span>
+            <span>{{ Direct.step }}</span>
           </v-sheet>
         </v-sheet>
       </v-col>
+      <v-sheet class="direction-sheet-recipe-menu" id="sheet-responsive">
+        <span class="direction-header-recipe">วิธีทำ</span>
+        <v-divider style="margin: 5px 0px 20px 0px"></v-divider>
+        <v-sheet v-for="(Direct, index) in Directs" :key="Direct.stepNo">
+          <v-divider
+            v-if="index !== 0"
+            :key="`${index}-divider`"
+            style="margin: 15px 0px 15px 0px; width: 100%"
+          ></v-divider>
+          <span>{{ Direct.step }}</span>
+        </v-sheet>
+      </v-sheet>
     </v-row>
   </div>
 </template>
@@ -157,67 +178,69 @@ export default {
       {
         ingrNO: 1,
         ingred: 'แป้งข้าวเหนียว',
-        unit: '1 ถ้วย'
+        unit: '1 ถ้วย',
       },
       {
         ingrNO: 2,
         ingred: 'น้ำเปล่า',
-        unit: '1/4 ถ้วย'
+        unit: '1/4 ถ้วย',
       },
       {
         ingrNO: 3,
         ingred: 'เผือกนึ่งสุก',
-        unit: ''
+        unit: '',
       },
       {
         ingrNO: 4,
         ingred: 'ฟักทองนึ่งสุก',
-        unit: ''
+        unit: '',
       },
       {
         ingrNO: 5,
         ingred: 'น้ำใบเตยคั้นเข้มข้น',
-        unit: ''
+        unit: '',
       },
       {
         ingrNO: 6,
         ingred: 'กะทิ',
-        unit: '1 ถ้วย'
+        unit: '1 ถ้วย',
       },
       {
         ingrNO: 7,
         ingred: 'น้ำตาลทราย',
-        unit: '1 ถ้วย'
+        unit: '1 ถ้วย',
       },
       {
         ingrNO: 8,
         ingred: 'เกลือป่น',
-        unit: '1 ช้อนชา'
+        unit: '1 ช้อนชา',
       },
       {
         ingrNO: 9,
         ingred: 'ไข่ไก่',
-        unit: '1 ฟอง'
+        unit: '1 ฟอง',
       },
-
-
     ],
     Directs: [
       {
         stepNo: 1,
-        step: 'แบ่งแป้งออกเป็น 3 ส่วน ส่วนที่ 1 นวดผสมแป้งกับน้ำเปล่าและเผือกนึ่งสุก ส่วนที่ 2 นวดแป้งกับน้ำเปล่าและฟักทองนึ่งสุก ส่วนที่ 3 นวดแป้งกับน้ำใบเตย นวดผสมจนเข้ากันเป็นเนื้อเดียว ปั้นเป็นก้อนกลม ๆ แล้วนำไปคลุกแป้งข้าวเหนียวบาง ๆ เตรียมไว้ ',
+        step:
+          'แบ่งแป้งออกเป็น 3 ส่วน ส่วนที่ 1 นวดผสมแป้งกับน้ำเปล่าและเผือกนึ่งสุก ส่วนที่ 2 นวดแป้งกับน้ำเปล่าและฟักทองนึ่งสุก ส่วนที่ 3 นวดแป้งกับน้ำใบเตย นวดผสมจนเข้ากันเป็นเนื้อเดียว ปั้นเป็นก้อนกลม ๆ แล้วนำไปคลุกแป้งข้าวเหนียวบาง ๆ เตรียมไว้ ',
       },
       {
         stepNo: 2,
-        step: 'ใส่น้ำกะทิลงในหม้อ เติมน้ำตาลทรายและเกลือป่นคนผสมจนละลาย นำขึ้นตั้งไฟพอเดือด รีบปิดไฟ เตรียมไว้',
+        step:
+          'ใส่น้ำกะทิลงในหม้อ เติมน้ำตาลทรายและเกลือป่นคนผสมจนละลาย นำขึ้นตั้งไฟพอเดือด รีบปิดไฟ เตรียมไว้',
       },
       {
         stepNo: 3,
-        step: 'ต้มน้ำเปล่าในหม้อจนเดือด นำบัวลอยลงต้มทีละสีจนลอยขึ้นมา จากนั้นตักขึ้นสะเด็ดน้ำ ใส่ลงในถ้วย ตักกะทิที่เตรียมไว้ใส่ลงไป',
+        step:
+          'ต้มน้ำเปล่าในหม้อจนเดือด นำบัวลอยลงต้มทีละสีจนลอยขึ้นมา จากนั้นตักขึ้นสะเด็ดน้ำ ใส่ลงในถ้วย ตักกะทิที่เตรียมไว้ใส่ลงไป',
       },
       {
         stepNo: 4,
-        step: 'ตอกไข่ไก่ใส่ถ้วย ค่อย ๆ เทลงในหม้อน้ำกะทิ รอจนไข่สุกตามชอบ จากนั้นตักใส่ลงในถ้วยบัวลอย พร้อมเสิร์ฟ',
+        step:
+          'ตอกไข่ไก่ใส่ถ้วย ค่อย ๆ เทลงในหม้อน้ำกะทิ รอจนไข่สุกตามชอบ จากนั้นตักใส่ลงในถ้วยบัวลอย พร้อมเสิร์ฟ',
       },
     ],
   }),
@@ -288,9 +311,8 @@ export default {
 }
 
 .content-sheet-recipe-menu {
-  border-radius: 10px 10px 0px 0px;
+  border-radius: 10px;
   width: 100%;
-  height: 550px;
   padding: 20px;
   margin-top: 30px;
 }
@@ -350,7 +372,14 @@ export default {
 
 .data-sheet-recipe-menu div > div {
   padding: 10px;
+  & > .no-data {
+    color: red;
+  }
+  & > span {
+    font-weight: bold;
+  }
 }
+
 
 .data-time-recipe {
   display: flex;
@@ -368,13 +397,17 @@ export default {
   width: 50%;
   text-align: right;
   border-bottom: 1px solid #606060;
+  
+  // & .cook-time {
+  //   font-weight: bold;
+  // }
 }
 
 .data-serve {
   width: 50%;
-
   text-align: left;
   border-right: 1px solid #606060;
+
 }
 
 .data-yield {
@@ -392,6 +425,7 @@ export default {
   padding: 20px;
 }
 
+
 .ingredients-header-recipe {
   font-weight: bold;
   font-size: 26px;
@@ -403,10 +437,27 @@ export default {
   padding: 20px;
 }
 
+#sheet-responsive {
+  display: none;
+}
+
 .direction-header-recipe {
   font-weight: bold;
   font-size: 26px;
 }
+
+.sheet-recipe-share-area {
+  width: 100%;
+  border-radius: 10px;
+  padding: 20px;
+  height: auto;
+  margin-bottom: 30px;
+  display: block;
+}
+
+.recipe-share-area-res{
+    display: none;
+  }
 
 @media only screen and (max-width: 1264px) {
   .recipe-container {
@@ -433,18 +484,43 @@ export default {
 }
 
 @media only screen and (max-width: 600px) {
-  .recipe-container {
-    width: 90%;
+  .col-direction {
+    display: none;
+  }
+  .recipe-card-img {
+    width: 300px;
+  }
+  .ingredient-sheet-recipe-menu {
+    border-radius: 10px;
+  }
+  #sheet-responsive {
+    display: block;
+    margin: 30px auto;
+  }
+  .data-sheet-recipe-menu {
+    width: 100%;
+    height: auto;
   }
   .header-recipe-text {
-    font-size: 4vh;
+    margin: 40px 0px 20px 0px;
   }
   .author-box {
-    margin: 0 auto;
     width: 100%;
+    margin: 10px auto;
   }
   .recipe-share-area {
     display: none;
   }
+  .data-sheet-recipe-menu div > div {
+    font-size: 12px;
+  }
+  .recipe-share-area-res{
+    width: 100%;
+    display: block;
+  }
+  // .sheet-recipe-share-area{
+  //   margin-top: 0px;
+  // }
+  
 }
 </style>
