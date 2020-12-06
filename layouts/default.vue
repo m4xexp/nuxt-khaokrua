@@ -2,7 +2,7 @@
   <v-app light style="background-color: #e4e5e5">
     <v-nav>
       <Nav v-if="false" />
-      <NavDense v-if="true" />
+      <NavDense v-else />
     </v-nav>
     <v-main>
       <nuxt />

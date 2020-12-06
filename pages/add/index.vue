@@ -1,12 +1,19 @@
 <template>
   <div class="add-container">
     <v-row id="row-first" no-gutters class="md-6" justify="center">
-      <v-sheet color="white" height="100" class="header-sheet-add-menu">
-        <h1 style="text-align: center">เพิ่มสูตรอาหาร</h1>
+      <v-sheet color="white" height="150" class="header-sheet-add-menu">
+        <v-breadcrumbs :items="breadcrumbs" style="position: absolute; left: 0px; top: 0px;" large>
+          <template v-slot:item="{ item }">
+            <v-breadcrumbs-item :href="item.href" :disabled="item.disabled">
+              {{ item.text.toUpperCase() }}
+            </v-breadcrumbs-item>
+          </template>
+        </v-breadcrumbs>
+        <h1 style="text-align: center; margin-top: 60px">เพิ่มสูตรอาหาร</h1>
       </v-sheet>
     </v-row>
 
-    <v-row id="row-first" no-gutters class="md-6" justify="center">
+    <v-row id="row-second" no-gutters class="md-6" justify="center">
       <v-sheet class="sheet-add-menu">
         <!-- For menu title and Description -->
 
@@ -21,11 +28,7 @@
               </v-text-field>
             </div>
 
-            <v-textarea
-              outlined
-              name="input-7-4"
-              label="รายละเอียด"
-            ></v-textarea>
+            <v-textarea outlined label="รายละเอียด"></v-textarea>
           </div>
 
           <!-- For categlory -->
@@ -45,7 +48,9 @@
                 label="ทำไรกินดีน้า"
               >
               </v-autocomplete>
-              <v-btn icon><v-icon>more_horiz</v-icon></v-btn>
+              <v-btn icon class="icon-more-tag-categlory"
+                ><v-icon>more_horiz</v-icon></v-btn
+              >
             </div>
           </div>
 
@@ -56,12 +61,6 @@
               <v-card
                 class="mx-auto"
                 max-width="400"
-                style="
-                  margin-top: 15px;
-                  margin-left: 100px;
-                  padding: 30px 30px;
-                  position: relative;
-                "
                 id="card-add-recipe-img"
                 height="200px"
                 width="240px"
@@ -71,13 +70,13 @@
                   elevation="5"
                   icon
                   raised
-                  class="icon-in-add-fav"
+                  class="icon-in-add-img"
                   href="/search"
                 >
                   <v-icon>add</v-icon>
                 </v-btn>
                 <v-card-title
-                  ><span class="text-in-add-fav">เพิ่มรูปภาพ</span>
+                  ><span class="text-in-add-img">เพิ่มรูปภาพ</span>
                 </v-card-title>
               </v-card>
             </div>
@@ -131,6 +130,9 @@
               </div>
             </div>
           </div>
+
+          <!-- Ingredients Text area -->
+
           <div class="field-recipe-ingredients">
             <span class="ingredients-header">ส่วนผสม</span>
             <v-divider style="margin: 5px 0px 20px 0px"></v-divider>
@@ -139,7 +141,10 @@
               v-for="(task, index) in tasks"
               :key="task.id"
             >
-              <div class="ingredients-field" style="position: relative">
+              <div
+                class="ingredients-field"
+                style="position: relative; height: 50px"
+              >
                 <div
                   class="ingredient-item-label"
                   v-if="!task.editing"
@@ -151,50 +156,96 @@
                     style="margin: 15px 0px 15px 0px; width: 100%"
                   ></v-divider>
 
-                  <div class="text-label" style="display: flex; justify-content: space-between">
+                  <div
+                    class="text-label"
+                    style="display: flex; justify-content: space-between"
+                  >
                     <span style="margin-left: 10px">{{ task.text }}</span>
-                    <span class="delete-ingredient" @click="deleteIngredient"><v-icon>delete</v-icon></span>
+                    <span class="delete-ingredient" @click="deleteIngredient"
+                      ><v-icon>delete</v-icon></span
+                    >
                   </div>
                 </div>
 
                 <div v-else class="ingredient-item-edit">
                   <v-text-field
-                    
                     outlined
                     clearable
-                    
-                    focusable
                     @blur="doneEdit(task)"
                     @keydown.enter="doneEdit(task)"
                     v-model="task.text"
                     style="margin: 0px"
                   ></v-text-field>
                 </div>
-                
               </div>
             </v-sheet>
 
             <v-textarea
               v-model="newTask"
               outlined
-              name="input-7-4"
-              label="รายละเอียด"
               clearable
+              placeholder="เช่น น้ำมะนาว 2 ช้อนโต๊ะ"
               @keydown.enter="create"
               style="margin-top: 25px"
             ></v-textarea>
           </div>
-          <div class="field-recipe-ingredients">
-            <span class="ingredients-header">วิธีทำ</span>
+
+          <!-- directions text area -->
+
+          <div class="field-recipe-directions">
+            <span class="directions-header">วิธีทำ</span>
             <v-divider style="margin: 5px 0px 20px 0px"></v-divider>
+            <v-sheet
+              class="sheet-directions"
+              v-for="(step, index) in steps"
+              :key="step.id"
+            >
+              <div
+                class="directions-field"
+                style="position: relative; height: 50px"
+              >
+                <div
+                  class="directions-item-label"
+                  v-if="!step.editing"
+                  @dblclick="editStep(step)"
+                >
+                  <v-divider
+                    v-if="index !== 0"
+                    :key="`${index}-divider`"
+                    style="margin: 15px 0px 15px 0px; width: 100%"
+                  ></v-divider>
+
+                  <div
+                    class="text-label"
+                    style="display: flex; justify-content: space-between"
+                  >
+                    <span style="margin-left: 10px">{{ step.text }}</span>
+                    <span class="delete-directions" @click="deleteStep"
+                      ><v-icon>delete</v-icon></span
+                    >
+                  </div>
+                </div>
+
+                <div v-else class="directions-item-edit">
+                  <v-text-field
+                    outlined
+                    clearable
+                    @blur="doneEditStep(step)"
+                    @keydown.enter="doneEditStep(step)"
+                    v-model="step.text"
+                    style="margin: 0px"
+                  ></v-text-field>
+                </div>
+              </div>
+            </v-sheet>
+
             <v-textarea
+              v-model="newStep"
               outlined
-              v-model="newTask"
-              name="input-7-4"
-              label="รายละเอียด"
               clearable
-              hint="ลองใส่ดูนะ"
-              @keydown.enter="create"
+              placeholder="เช่น น้ำมะนาว 2 ช้อนโต๊ะ"
+              @keydown.enter="createStep"
+              style="margin-top: 25px"
             ></v-textarea>
           </div>
 
@@ -204,7 +255,7 @@
             </div>
             <div class="btn-cancel">
               <span>หรือ</span>
-              <v-btn text color="warnning">ยกเลิก</v-btn>
+              <a href="#" style="text-decoration: none">ยกเลิก</a>
             </div>
           </div>
         </div>
@@ -238,38 +289,54 @@ export default {
     ],
     prep: ['นาที', 'ชั่วโมง', 'วัน'],
     cookTime: ['นาที', 'ชั่วโมง', 'วัน'],
-    Ingredients: [
-      {
-        done: false,
-        text: 'Foobar',
-      },
-      {
-        done: false,
-        text: 'Fizzbuzz',
-      },
-    ],
-    ingredient: null,
     idTask: 3,
     tasks: [
+      // {
+      //   id: 1,
+      //   done: false,
+      //   text: 55555,
+      //   editing: false,
+      // },
+      // {
+      //   id: 2,
+      //   done: false,
+      //   text: 66666,
+      //   editing: false,
+      // },
+    ],
+    newStep: null,
+    idStep: 3,
+    steps: [
+      // {
+      //   id: 1,
+      //   done: false,
+      //   text: 55555,
+      //   editing: false,
+      // },
+      // {
+      //   id: 2,
+      //   done: false,
+      //   text: 66666,
+      //   editing: false,
+      // },
+    ],
+    newStep: null,
+    breadcrumbs: [
       {
-        id: 1,
-        done: false,
-        text: 55555,
-        editing: false,
+        text: 'หน้าแรก',
+        disabled: false,
+        href: '/',
       },
       {
-        id: 2,
-        done: false,
-        text: 66666,
-        editing: false,
+        text: 'เพิ่มสูตรอาหาร',
+        disabled: true,
+        href: 'add',
       },
     ],
-    newTask: null,
   }),
 
   methods: {
     create() {
-
       this.tasks.push({
         id: this.idTask,
         done: false,
@@ -282,8 +349,8 @@ export default {
       this.newTask = null
     },
 
-    deleteIngredient(task){
-      this.tasks.splice(task.index,1)
+    deleteIngredient(task) {
+      this.tasks.splice(task.index, 1)
     },
 
     edit(task) {
@@ -292,21 +359,34 @@ export default {
     doneEdit(task) {
       task.editing = false
     },
+
+    createStep() {
+      this.steps.push({
+        id: this.idStep,
+        done: false,
+        text: this.newStep,
+        editing: false,
+      })
+
+      this.idStep++
+      this.newStep = null
+    },
+
+    deleteStep(step) {
+      this.steps.splice(step.index, 1)
+    },
+
+    editStep(step) {
+      step.editing = true
+    },
+    doneEditStep(step) {
+      step.editing = false
+    },
   },
 }
 </script>
 
-<style lang="scss" scope>
-@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap');
-
-* {
-  margin: 0;
-  padding: 0;
-  outline: none;
-  font-family: 'Kanit', sans-serif;
-  box-sizing: border-box;
-}
-
+<style lang="scss">
 #row-header {
   width: 97%;
   margin-left: 20px;
@@ -350,6 +430,10 @@ export default {
 .categlory-header {
   font-size: 45px;
   margin: 20px auto;
+}
+
+.icon-more-tag-categlory {
+  margin-top: 15px;
 }
 
 .field-recipe-detail {
@@ -434,6 +518,34 @@ export default {
   margin-left: 40px;
 }
 
+#card-add-recipe-img {
+  margin-top: 15px;
+  padding: 30px 30px;
+  position: relative;
+}
+
+.icon-in-add-img {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
+  top: 40%;
+}
+
+.text-in-add-img {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  font-weight: bold;
+  margin: 30px auto;
+}
+
 .ingredients-header {
   font-size: 45px;
   margin: 20px auto;
@@ -450,27 +562,49 @@ export default {
   justify-content: center;
 }
 
-.btn-save {
-  margin-right: 25px;
-}
+// .btn-save {
+
+// }
 
 .btn-cancel {
-  margin-left: 20px;
+  padding: 15px;
 }
 
 .ingredient-item-label {
   font-size: 16px;
 }
 
-.delete-ingredient{
+.delete-ingredient {
   cursor: pointer;
   transition: 0.25s ease-in-out;
-  &:hover{
+  &:hover {
     transform: scale(1.2);
   }
 }
 
-.ingredient-item-edit{
+.ingredient-item-edit {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.directions-header {
+  font-size: 45px;
+  margin: 20px auto;
+}
+
+.directions-item-label {
+  font-size: 16px;
+}
+
+.delete-directions {
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
+.directions-item-edit {
   width: 100%;
   margin-top: 15px;
 }

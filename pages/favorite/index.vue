@@ -1,34 +1,36 @@
 <template>
   <div class="fav-container">
-    <v-row
-      no-gutters
-      class="md-6"
-      style="
-        width: 97%;
-        margin-left: 20px;
-        margin-top: 20px;
-        display: flex;
-        justify-content: center;
-      "
-    >
+    <v-row no-gutters class="md-6">
       <v-sheet color="white" height="150" class="sheet-fav-menu">
-        <v-breadcrumbs :items="breadcrumbs" style="position: absolute; left: 2em; top: 1em;">
+        <v-breadcrumbs
+          :items="breadcrumbs"
+          style="position: absolute; left: 0px; top: 0px"
+          large
+        >
           <template v-slot:item="{ item }">
             <v-breadcrumbs-item :href="item.href" :disabled="item.disabled">
               {{ item.text.toUpperCase() }}
             </v-breadcrumbs-item>
           </template>
         </v-breadcrumbs>
-        
-        <h1 style="text-align: center">เมนูโปรด</h1>
 
-        <v-btn color="success" absolute outlined text style="right: 3em; top: 1em"><span>แก้ไข</span></v-btn>
+        <h1 style="text-align: center; margin-top: 60px">เมนูโปรด</h1>
+
+        <v-btn
+          color="success"
+          absolute
+          outlined
+          text
+          style="right: 20px; top: 15px"
+          @click="overlay = !overlay"
+          ><span>แก้ไข</span></v-btn
+        >
       </v-sheet>
     </v-row>
 
     <!-- Card menu -->
 
-    <div class="menu-card-box">
+    <div class="menu-card-box-fav">
       <v-layout row wrap class="menu-card-cober-each-card">
         <v-card
           class="mx-auto"
@@ -145,6 +147,12 @@
                 <span>ทำอาหาร</span>
               </v-btn>
             </v-card-actions>
+
+            <v-overlay :absolute="absolute" :value="overlay">
+              <v-btn color="warning" @click="overlay = false">
+                <span>ลบออกจากเมนูโปรด</span>
+              </v-btn>
+            </v-overlay>
           </v-card>
         </v-flex>
       </v-layout>
@@ -170,6 +178,8 @@ export default {
   data: () => ({
     loading: false,
     selection: 1,
+    absolute: true,
+    overlay: false,
     menus: [
       {
         Name: 'ต้มยำกุ้ง',
@@ -228,40 +238,35 @@ export default {
         href: 'favorite',
       },
     ],
-    
   }),
   methods: {
-      reserve() {
-        this.loading = true
+    reserve() {
+      this.loading = true
 
-        setTimeout(() => (this.loading = false), 2000)
-      },
+      setTimeout(() => (this.loading = false), 2000)
     },
+  },
 }
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap');
-
-* {
-  margin: 0;
-  padding: 0;
-  outline: none;
-  font-family: 'Kanit', sans-serif;
-  box-sizing: border-box;
-}
-
 .fav-container {
   margin: 5px auto;
   width: 90%;
   position: relative;
 }
 
+// .sheet-fav-menu {
+//   border-radius: 10px 10px 0px 0px;
+//   padding: 50px;
+//   margin-top: 0 auto;
+//   width: 100%;
+// }
+
 .sheet-fav-menu {
   border-radius: 10px 10px 0px 0px;
-  padding: 50px;
-  margin-top: 0 auto;
   width: 100%;
+  padding: 20px;
 }
 
 .icon-in-add-fav {
@@ -302,27 +307,13 @@ export default {
   color: rgb(0, 0, 0);
   text-decoration: none;
   transition: 0.25s ease-in-out;
-}
-
-.footer-in-add-fav a:hover {
-  font-size: 20px;
+  &:hover {
+    font-size: 20px;
+  }
 }
 
 .menu-card-cober-each-card .menu-card-each-card {
   padding: 15px 15px 15px 15px;
-}
-
-.menu-card-each-card .btn-fav-recipe .btn-fav-recipe-icon {
-  position: absolute;
-  left: 80%;
-  bottom: 43%;
-  background: red;
-  color: white;
-  font-size: 1.2em;
-  font-weight: bold;
-  padding: 15px;
-  border-radius: 50%;
-  transition: 0.3s ease-in-out;
 }
 
 .menu-card-each-card .btn-fav-recipe .btn-fav-recipe-icon:hover {
@@ -344,39 +335,38 @@ export default {
   text-align: center;
 }
 
+#card-add-recipe{
+  width: 300px;
+}
+
 #card-recipe {
   transition: 0.25s ease;
   overflow: hidden;
   // cursor: pointer;
-}
-
-#card-recipe:hover {
-  transform: scale(1.05);
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+  }
 }
 
 #card-recipe .card-recipe-img {
   transition: 0.25s ease;
+  &:hover .card-recipe-img {
+    transform: scale(1.2);
+  }
 }
 
-#card-recipe:hover .card-recipe-img {
-  transform: scale(1.2);
-}
-
-.menu-card-box {
+#card-recipe .menu-card-box-fav {
   background-color: white;
   margin-left: 20px;
   margin-right: 20px;
   padding: 20px;
 }
 
-.menu-card-box-2 {
+.menu-card-box-fav {
   background-color: white;
-  margin-top: 50px;
-  margin-left: 20px;
-  margin-right: 20px;
   padding: 20px;
-  border-radius: 0px 10px 10px 10px;
+  border-radius: 0px 0px 0px 0px;
 }
 
 .card-data .box-card-data {
@@ -386,40 +376,26 @@ export default {
 }
 
 @media only screen and (max-width: 376px) {
-  #card-add-recipe {
-    width: 250px;
-  }
-}
-
-@media only screen and (max-width: 376px) {
   .sheet-fav-menu {
-    margin-right: 30px;
-    width: 91%;
+    width: 100%;
   }
-}
-
-@media only screen and (max-width: 1920px) {
   #card-add-recipe {
-    width: 300px;
+    height: 300px;
   }
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1264px) {
+  .sheet-fav-menu {
+    width: 100%;
+  }
   #card-add-recipe {
     width: 258.52px;
   }
 }
 
-@media only screen and (max-width: 1024px) {
-  .sheet-fav-menu {
-    margin-right: 15px;
-    width: 99%;
-  }
-}
-
 @media only screen and (max-width: 768px) {
   #card-add-recipe {
-    width: 287.6px;
+    width: 300px;
   }
 }
 </style>

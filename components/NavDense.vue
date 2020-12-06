@@ -24,7 +24,7 @@
             contain
             src="https://firebasestorage.googleapis.com/v0/b/khaokrua-e8479.appspot.com/o/KhaoKrua_logo.png?alt=media&token=ea7ca56b-be32-47da-adb5-e956ab039f73"
             transition="scale-transition"
-            width="360"
+            id="nav-logo-khakrua"
           />
         </div>
       </div>
@@ -193,13 +193,7 @@ export default {
 }
 </script>
 
-<style scrope>
-* {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  box-sizing: border-box;
-}
+<style lang="scss">
 
 .header-nav {
   overflow: hidden;
@@ -214,6 +208,18 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+#nav-logo-khakrua{
+  width: 360px;
+}
+
+@media only screen and (max-width: 600px) {
+  #nav-logo-khakrua{
+  width: 250px;
+  }
+}
+
+
 
 .header-nav-logo .nav-logo {
   margin: 50px;
