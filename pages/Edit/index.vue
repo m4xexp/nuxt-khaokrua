@@ -13,7 +13,7 @@
             </v-breadcrumbs-item>
           </template>
         </v-breadcrumbs>
-        <h1 style="text-align: center; margin-top: 60px">เพิ่มสูตรอาหาร</h1>
+        <h1 style="text-align: center; margin-top: 60px">แก้ไขสูตรอาหาร</h1>
       </v-sheet>
     </v-row>
 
@@ -317,7 +317,7 @@ export default {
         href: '/',
       },
       {
-        text: 'เพิ่มสูตรอาหาร',
+        text: 'แก้ไขสูตรอาหาร',
         disabled: true,
         href: 'add',
       },
@@ -420,7 +420,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss"> 
 #row-header {
   width: 97%;
   margin-left: 20px;
