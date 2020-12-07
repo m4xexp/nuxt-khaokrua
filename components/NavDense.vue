@@ -19,7 +19,7 @@
 
       <!-- Logo KhaoKrua -->
 
-      <div class="header-nav-logo">
+      <div class="header-nav-logo" style="display: none">
         <div class="nav-logo">
           <v-img
             alt="khaokrua Logo"

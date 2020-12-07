@@ -359,11 +359,7 @@ export default {
 
       this.idStep++
       this.newStep = null
-      
-      this.DataRecipe.push({
-        Ingredients: this.Ingredients,
-        Directions: this.steps
-      })
+    
     },
 
     deleteStep(index) {
@@ -376,8 +372,8 @@ export default {
     doneEditStep(step) {
       step.editing = false
     },
-    saveRecipeData() {
-      // event.preventDefault()
+    saveRecipeData(event) {
+      event.preventDefault()
 
       axois
         .post(
@@ -569,7 +565,7 @@ export default {
 .btn-for-add-recipe {
   width: 100%;
   display: flex;
-  margin: 25px 25px;
+  // margin: 25px 25px;
   justify-content: center;
 }
 

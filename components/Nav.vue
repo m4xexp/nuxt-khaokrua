@@ -27,6 +27,7 @@
               src="https://firebasestorage.googleapis.com/v0/b/khaokrua-e8479.appspot.com/o/KhaoKrua_logo.png?alt=media&token=ea7ca56b-be32-47da-adb5-e956ab039f73"
               transition="scale-transition"
               width="360"
+              @click="onClicklLogo"
             />
         </div>
         </nuxt-link>
@@ -191,6 +192,11 @@ export default {
       email: 'priewmx1027@gmail.com',
     },
   }),
+  methods: {
+    onClicklLogo () {
+      console.log("pass")
+    }
+  }
 }
 </script>
 
