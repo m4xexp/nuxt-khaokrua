@@ -280,6 +280,9 @@ export default {
   margin: 3px 5px;
   display: inline-block;
   /* background-color: red; */
+  & > .btn-profile{
+    display: none;
+  }
 }
 
 span {
@@ -298,6 +301,7 @@ span {
 
 .header-nav-menu .nav-menu .btn-profile {
   margin: 0;
+  display: none;
   /* background-color: black; */
 }
 </style>

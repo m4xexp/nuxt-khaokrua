@@ -17,7 +17,7 @@
       </v-sheet>
     </v-row>
 
-    <v-row id="row-second" no-gutters class="md-6" justify="center">
+    <v-row id="row-second" no-gutters class="md-6">
       <v-sheet class="sheet-add-menu">
         <!-- For menu title and Description -->
 
@@ -28,11 +28,16 @@
                 outlined
                 label="ชื่อเมนู"
                 append-icon="help_outline"
+                v-model="DataRecipe.RecipeTitle"
               >
               </v-text-field>
             </div>
 
-            <v-textarea outlined label="รายละเอียด"></v-textarea>
+            <v-textarea
+              outlined
+              label="รายละเอียด"
+              v-model="DataRecipe.RecipeCaption"
+            ></v-textarea>
           </div>
 
           <!-- For categlory -->
@@ -42,7 +47,7 @@
             <v-divider style="margin: 5px 0px 20px 0px"></v-divider>
             <div class="auto-tag-field">
               <v-autocomplete
-                v-model="model"
+                v-model="DataRecipe.RecipeTag"
                 chips
                 deletable-chips
                 outlined
@@ -142,56 +147,50 @@
             <v-divider style="margin: 5px 0px 20px 0px"></v-divider>
             <v-sheet
               class="sheet-ingredients"
-              v-for="(task, index) in tasks"
-              :key="task.id"
+              v-for="ingred in Ingredients"
+              :key="ingred.id"
             >
-              <div
-                class="ingredients-field"
-                style="position: relative; height: 50px"
-              >
-                <div
-                  class="ingredient-item-label"
-                  v-if="!task.editing"
-                  @dblclick="edit(task)"
-                >
-                  <v-divider
-                    v-if="index !== 0"
-                    :key="`${index}-divider`"
-                    style="margin: 15px 0px 15px 0px; width: 100%"
-                  ></v-divider>
-
-                  <div
-                    class="text-label"
-                    style="display: flex; justify-content: space-between"
-                  >
-                    <span style="margin-left: 10px">{{ task.text }}</span>
-                    <span class="delete-ingredient" @click="deleteIngredient"
-                      ><v-icon>delete</v-icon></span
-                    >
-                  </div>
-                </div>
-
-                <div v-else class="ingredient-item-edit">
+              <div class="ingredients-field">
+                <div class="input-name">
                   <v-text-field
+                    v-model="ingred.text"
+                    :value="ingred.text"
                     outlined
                     clearable
-                    @blur="doneEdit(task)"
-                    @keydown.enter="doneEdit(task)"
-                    v-model="task.text"
-                    style="margin: 0px"
+                    placeholder="เช่น น้ำมะนาว"
+                    style="margin: 15px 0px 15px 0px"
                   ></v-text-field>
+                </div>
+                <div class="input-unit" style="width: 40%">
+                  <v-text-field
+                    v-model="ingred.unit"
+                    :value="ingred.unit"
+                    outlined
+                    clearable
+                    placeholder="เช่น 2 ช้อนโต๊ะ"
+                    style="margin: 15px 0px 15px 20px"
+                  ></v-text-field>
+                </div>
+                <div class="action">
+                  <span class="delete-directions" @click="deleteStep"
+                    ><v-icon
+                      @click="deleteIngredient"
+                      style="margin-top: 28px; margin-left: 10px"
+                      >delete</v-icon
+                    ></span
+                  >
                 </div>
               </div>
             </v-sheet>
 
-            <v-textarea
-              v-model="newTask"
-              outlined
-              clearable
-              placeholder="เช่น น้ำมะนาว 2 ช้อนโต๊ะ"
-              @keydown.enter="create"
-              style="margin-top: 25px"
-            ></v-textarea>
+            <div
+              class="btn-add-line-ingred"
+              style="margin: 20px; display: flex; justify-content: center"
+            >
+              <v-btn @click="addIngred" outlined color="success"
+                ><span><v-icon>add</v-icon></span> เพิ่มส่วนผสม</v-btn
+              >
+            </div>
           </div>
 
           <!-- directions text area -->
@@ -219,10 +218,7 @@
                     style="margin: 15px 0px 15px 0px; width: 100%"
                   ></v-divider>
 
-                  <div
-                    class="text-label"
-                    style="display: flex; justify-content: space-between"
-                  >
+                  <div class="text-label" style="display: flex; justify-content: space-between">
                     <span style="margin-left: 10px">{{ step.text }}</span>
                     <span class="delete-directions" @click="deleteStep"
                       ><v-icon>delete</v-icon></span
@@ -232,6 +228,7 @@
 
                 <div v-else class="directions-item-edit">
                   <v-text-field
+                    autofocus
                     outlined
                     clearable
                     @blur="doneEditStep(step)"
@@ -243,19 +240,21 @@
               </div>
             </v-sheet>
 
-            <v-textarea
+            <v-text-field
               v-model="newStep"
               outlined
               clearable
               placeholder="เช่น น้ำมะนาว 2 ช้อนโต๊ะ"
               @keydown.enter="createStep"
               style="margin-top: 25px"
-            ></v-textarea>
+            ></v-text-field>
           </div>
 
           <div class="btn-for-add-recipe">
             <div class="btn-save">
-              <v-btn x-large color="success"><span>บันทึก</span></v-btn>
+              <v-btn x-large color="success" @click="saveRecipeData"
+                ><span>บันทึก</span></v-btn
+              >
             </div>
             <div class="btn-cancel">
               <span>หรือ</span>
@@ -264,21 +263,18 @@
           </div>
         </div>
       </v-sheet>
+
+      <!-- Stepper -->
     </v-row>
   </div>
 </template>
 
 <script>
+// import AddIngred from '~/components/AddRecipe/AddIngred';
+import axois from 'axios'
+
 export default {
-  name: 'Home',
-
   components: {},
-
-  pagination() {
-    return {
-      page: 1,
-    }
-  },
 
   data: () => ({
     isEditing: true,
@@ -293,37 +289,19 @@ export default {
     ],
     prep: ['นาที', 'ชั่วโมง', 'วัน'],
     cookTime: ['นาที', 'ชั่วโมง', 'วัน'],
-    idTask: 3,
-    tasks: [
-      // {
-      //   id: 1,
-      //   done: false,
-      //   text: 55555,
-      //   editing: false,
-      // },
-      // {
-      //   id: 2,
-      //   done: false,
-      //   text: 66666,
-      //   editing: false,
-      // },
+    idIngred: 0,
+    Ingredients: [
+      {
+        id: 0,
+        text: 'น้ำปลา',
+        unit: '2 ช้อนโต๊ะ',
+      },
     ],
-    newStep: null,
-    idStep: 3,
-    steps: [
-      // {
-      //   id: 1,
-      //   done: false,
-      //   text: 55555,
-      //   editing: false,
-      // },
-      // {
-      //   id: 2,
-      //   done: false,
-      //   text: 66666,
-      //   editing: false,
-      // },
-    ],
+    newIngred: null,
+    newUnit: null,
+
+    idStep: 0,
+    steps: [],
     newStep: null,
     breadcrumbs: [
       {
@@ -337,47 +315,59 @@ export default {
         href: 'add',
       },
     ],
+
+    DataRecipe: {
+      RecipeTitle: null,
+      RecipeCaption: null,
+      RecipeTag: null,
+      Ingredients: null,
+      Directions: null,
+    },
+
   }),
 
   methods: {
-    create() {
-      this.tasks.push({
-        id: this.idTask,
-        done: false,
-        text: this.newTask,
-        editing: false,
+    addIngred() {
+
+      this.Ingredients.push({
+        text: this.newIngred,
+        unit: this.newUnit,
       })
 
-      this.idTask++
-      console.log(this.task)
-      this.newTask = null
+      this.idIngred++
+      console.log(this.Ingredients)
     },
 
-    deleteIngredient(task) {
-      this.tasks.splice(task.index, 1)
+    addIngredbeforePost() {
+      this.Ingredients.push({
+        text: this.newIngred,
+        unit: this.newUnit,
+      })
+      console.log(this.Ingredients)
     },
 
-    edit(task) {
-      task.editing = true
-    },
-    doneEdit(task) {
-      task.editing = false
+    deleteIngredient(index) {
+      this.Ingredients.splice(index, 1)
     },
 
     createStep() {
       this.steps.push({
         id: this.idStep,
-        done: false,
         text: this.newStep,
         editing: false,
       })
 
       this.idStep++
       this.newStep = null
+      
+      this.DataRecipe.push({
+        Ingredients: this.Ingredients,
+        Directions: this.steps
+      })
     },
 
-    deleteStep(step) {
-      this.steps.splice(step.index, 1)
+    deleteStep(index) {
+      this.steps.splice(index, 1)
     },
 
     editStep(step) {
@@ -385,6 +375,23 @@ export default {
     },
     doneEditStep(step) {
       step.editing = false
+    },
+    saveRecipeData() {
+      // event.preventDefault()
+
+      axois
+        .post(
+          'https://khaokrua-cooking-default-rtdb.firebaseio.com/Recipe.json',
+          this.DataRecipe
+        )
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+
+      console.log(this.DataRecipe)
     },
   },
 }
@@ -410,7 +417,7 @@ export default {
 }
 
 .wraper-sheet-add-menu {
-  width: 80%;
+  width: 90%;
 }
 
 .header-sheet-add-menu {
@@ -566,9 +573,13 @@ export default {
   justify-content: center;
 }
 
-// .btn-save {
+.text-label {
+  display: flex;
+}
 
-// }
+.input-name {
+  width: 60%;
+}
 
 .btn-cancel {
   padding: 15px;
@@ -611,6 +622,17 @@ export default {
 .directions-item-edit {
   width: 100%;
   margin-top: 15px;
+}
+
+.ActionAddIngred {
+  display: flex;
+}
+
+.ingredients-field {
+  display: flex;
+  position: relative;
+  height: 70px;
+  justify-content: space-between;
 }
 
 @media only screen and (max-width: 960px) {

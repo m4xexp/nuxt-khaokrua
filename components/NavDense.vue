@@ -16,6 +16,7 @@
           <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
         </div>
       </div>
+
       <!-- Logo KhaoKrua -->
 
       <div class="header-nav-logo">
@@ -85,9 +86,63 @@
           </nuxt-link>
         </li>
 
+        <!-- Login Menu -->
+
+        <li class="btn-fav-recipe">
+          <div @click="login">
+            <v-icon left>face</v-icon>
+            <span>เข้าสู่ระบบ</span>
+          </div>
+        </li>
+
+        <v-row justify="center">
+          <v-dialog v-model="dialog" persistent max-width="600px">
+            <v-card>
+              <v-card-title>
+                <span>เข้าสู่ระบบ</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-text-field label="Email*" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                        label="Password*"
+                        type="password"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" style="text-lign: right">
+                      <span>ลืมรหัสผ่าน?</span>
+                    </v-col>
+                  </v-row>
+                  <v-col cols="12">
+                    <v-btn color="success" rounded width="100%">เข้าสู่ระบบ</v-btn>
+                  </v-col>
+                  <v-col cols="12">
+                    <span>หรือเข้าสู่ระบบด้วย</span>
+                  </v-col>
+                </v-container>
+              </v-card-text>
+              <v-card-actions>
+                
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="dialog = false">
+                  Close
+                </v-btn>
+                <v-btn color="blue darken-1" text @click="dialog = false">
+                  Save
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
+
         <!-- Profile Menu -->
 
-        <li class="btn-profile">
+        <li class="btn-profile" style="display: none">
           <v-menu bottom min-width="200px" rounded offset-y>
             <template v-slot:activator="{ on, attrs }">
               <v-btn
@@ -136,6 +191,104 @@
                       <v-icon left>add</v-icon>
                       <span>เพิ่มสูตรอาหาร</span>
                     </v-btn>
+
+                    <v-divider class="my-3"></v-divider>
+
+                    <v-row justify="center">
+                      <v-dialog v-model="dialog" persistent max-width="600px">
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                            Open Dialog
+                          </v-btn>
+                        </template>
+                        <v-card>
+                          <v-card-title>
+                            <span class="headline">User Profile</span>
+                          </v-card-title>
+                          <v-card-text>
+                            <v-container>
+                              <v-row>
+                                <v-col cols="12" sm="6" md="4">
+                                  <v-text-field
+                                    label="Legal first name*"
+                                    required
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="4">
+                                  <v-text-field
+                                    label="Legal middle name"
+                                    hint="example of helper text only on focus"
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="4">
+                                  <v-text-field
+                                    label="Legal last name*"
+                                    hint="example of persistent helper text"
+                                    persistent-hint
+                                    required
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="12">
+                                  <v-text-field
+                                    label="Email*"
+                                    required
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="12">
+                                  <v-text-field
+                                    label="Password*"
+                                    type="password"
+                                    required
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="6">
+                                  <v-select
+                                    :items="['0-17', '18-29', '30-54', '54+']"
+                                    label="Age*"
+                                    required
+                                  ></v-select>
+                                </v-col>
+                                <v-col cols="12" sm="6">
+                                  <v-autocomplete
+                                    :items="[
+                                      'Skiing',
+                                      'Ice hockey',
+                                      'Soccer',
+                                      'Basketball',
+                                      'Hockey',
+                                      'Reading',
+                                      'Writing',
+                                      'Coding',
+                                      'Basejump',
+                                    ]"
+                                    label="Interests"
+                                    multiple
+                                  ></v-autocomplete>
+                                </v-col>
+                              </v-row>
+                            </v-container>
+                            <small>*indicates required field</small>
+                          </v-card-text>
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn
+                              color="blue darken-1"
+                              text
+                              @click="dialog = false"
+                            >
+                              Close
+                            </v-btn>
+                            <v-btn
+                              color="blue darken-1"
+                              text
+                              @click="dialog = false"
+                            >
+                              Save
+                            </v-btn>
+                          </v-card-actions>
+                        </v-card>
+                      </v-dialog>
+                    </v-row>
 
                     <v-divider class="my-3"></v-divider>
 
@@ -191,12 +344,18 @@ export default {
       fullName: 'Ploylada',
       email: 'priewmx1027@gmail.com',
     },
+    dialog: false,
   }),
+
+  methods: {
+    login() {
+      this.dialog = true
+    }
+  }
 }
 </script>
 
 <style lang="scss">
-
 .header-nav {
   overflow: hidden;
 }
@@ -211,17 +370,15 @@ export default {
   transform: translate(-50%, -50%);
 }
 
-#nav-logo-khakrua{
+#nav-logo-khakrua {
   width: 360px;
 }
 
 @media only screen and (max-width: 600px) {
-  #nav-logo-khakrua{
-  width: 250px;
+  #nav-logo-khakrua {
+    width: 250px;
   }
 }
-
-
 
 .header-nav-logo .nav-logo {
   margin: 50px;
@@ -291,17 +448,29 @@ export default {
   margin: 3px 5px;
   display: inline-block;
   /* background-color: red; */
+  & a {
+    text-decoration: none;
+  }
 }
 
 span {
   vertical-align: middle;
 }
 
-ul li a {
-  text-decoration: none;
+// ul li a {
+//   text-decoration: none;
+// }
+
+ul li{
+    cursor: pointer;
 }
 
 li a span {
+  font-size: 16px;
+  color: rgb(255, 255, 255);
+}
+
+li div span {
   font-size: 16px;
   color: rgb(255, 255, 255);
 }
@@ -316,7 +485,8 @@ li a span {
   height: 15%;
 }
 
-.header-nav-menu .nav-menu .btn-profile {
+.btn-profile {
+  display: block;
   margin: 0;
   /* background-color: black; */
 }

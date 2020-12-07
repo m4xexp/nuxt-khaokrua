@@ -47,7 +47,7 @@
             <div class="share-button">
               <i class="fab fa-facebook"></i>
               <v-btn><i class="fab fa-facebook"></i></v-btn>
-              <v-btn color="primary"><v-icon>fab fa-facebook</v-icon></v-btn>
+              <v-btn color="primary" @click="getDataRecipe" ><v-icon>fab fa-facebook</v-icon></v-btn>
             </div>
           </div>
         </div>
@@ -80,7 +80,7 @@
         <v-sheet class="sheet-recipe-share-area">
           <div class="share-button">
             <i class="fab fa-facebook"></i>
-            <v-btn><i class="fab fa-facebook"></i></v-btn>
+            <font-awesome-icon :icon="['fab', 'facebook']"/>
             <v-btn color="primary"><v-icon>fab fa-facebook</v-icon></v-btn>
           </div>
         </v-sheet>
@@ -160,6 +160,9 @@
 </template>
 
 <script>
+
+import axios from 'axios';
+
 export default {
   data: () => ({
     breadcrumbs: [
@@ -244,6 +247,14 @@ export default {
       },
     ],
   }),
+  methods: {
+    getDataRecipe() {
+      axios.get("https://khaokrua-cooking-default-rtdb.firebaseio.com/Recipe.json")
+      .then(res=>{
+        console.log(res)
+      })
+    }
+  }
 }
 </script>
 
