@@ -4,7 +4,7 @@
       <v-row justify="center" class="title">
         <span class="login-title"> เข้าสู่ระบบ </span>
       </v-row>
-      <v-form ref="form" v-model="valid" lazy-validation>
+      <v-form ref="form" lazy-validation>
         <div class="input-email">
           <v-text-field
             color="primary"
@@ -42,7 +42,7 @@
           <v-btn
             color="success"
             class="mr-4"
-            @click="validate"
+            @click="handleLoginClicked"
             id="btnLogin"
             name="btnLogin"
             style="width: 100%"
@@ -85,14 +85,18 @@ export default {
     }
   },
   methods: {
-    submit() {
-      var state = this.$refs.form.validate()
-      if (state) {
-        this.$store.dispatch({
-          type: 'doLogin',
-          email: this.account.email,
-          password: this.account.password,
-        })
+    printData(){
+      console.log('account', this.account)
+    },
+    async handleLoginClicked() {
+      try {
+        let response = await this.$auth.loginWith('local', { 
+            data: {
+              user: { email: this.account.email, password: this.account.password}
+            } })
+        console.log(response)
+      } catch (err) {
+        console.log(err)
       }
     },
   },
@@ -100,6 +104,16 @@ export default {
 </script>
 
 <style scope>
+
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap');
+
+* {
+  list-style: none;
+  outline: none;
+  font-family: 'Kanit', sans-serif;
+  box-sizing: border-box;
+}
+
 .login-container {
   height: 100px;
 }

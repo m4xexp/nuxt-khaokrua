@@ -40,8 +40,25 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     'nuxt-material-design-icons',
-    // '@nuxtjs/proxy'
+    '@nuxtjs/auth'
   ],
+
+  auth: {
+    redirect: {
+      login: '/login'
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: 'https://sakko-demo-api.herokuapp.com/api/v1/user/sign_in', method: 'post', propertyName: 'user.auth_jwt'},
+          logout: { url: 'https://sakko-demo-api.herokuapp.com/api/v1/user/sign_out', method: 'delete' },
+          user: { url: 'https://sakko-demo-api.herokuapp.com/api/v1/user/me', method: 'get', propertyName: 'user' }
+        },
+        tokenName: 'auth-token'
+      },
+    }
+  
+  },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {},

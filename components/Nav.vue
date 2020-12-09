@@ -74,68 +74,7 @@
 
         <!-- Profile Menu -->
 
-        <li class="btn-profile">
-          <v-menu bottom min-width="200px" rounded offset-y>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                icon
-                x-large
-                v-bind="attrs"
-                v-on="on"
-                max-width="32px"
-                max-height="32px"
-              >
-                <v-avatar>
-                  <img
-                    src="../assets/Profile/miew.jpg"
-                    alt="miew"
-                    style="max-width: 32px; max-height: 32px"
-                  />
-                </v-avatar>
-              </v-btn>
-            </template>
-            <v-card>
-              <v-list-item-content>
-                <div class="mx-auto text-center">
-                  <!-- Profile button -->
-                  <v-btn x-large icon>
-                    <v-avatar>
-                      <img src="../assets/Profile/miew.jpg" alt="nong" />
-                    </v-avatar>
-                  </v-btn>
-                  <div class="prfile-title" style="margin: 10px">
-                    <h4 class="profile-title-name">{{ user.fullName }}</h4>
-                    <p class="caption mt-1" id="profile-title-email">
-                      {{ user.email }}
-                    </p>
-                  </div>
-
-                  <div class="profile-items">
-                    <v-divider class="my-3"></v-divider>
-                    <v-btn depressed rounded text href="#">
-                      <v-icon left>account_circle</v-icon>
-                      <span>แก้ไขโปรไฟล์</span>
-                    </v-btn>
-
-                    <v-divider class="my-3"></v-divider>
-
-                    <v-btn depressed rounded text href="/add">
-                      <v-icon left>add</v-icon>
-                      <span>เพิ่มสูตรอาหาร</span>
-                    </v-btn>
-
-                    <v-divider class="my-3"></v-divider>
-
-                    <v-btn depressed rounded text href="#">
-                      <v-icon left>login</v-icon>
-                      <span>ออกจากระบบ</span>
-                    </v-btn>
-                  </div>
-                </div>
-              </v-list-item-content>
-            </v-card>
-          </v-menu>
-        </li>
+        
       </ul>
     </v-app-bar>
 

@@ -436,6 +436,16 @@ export default {
 </script>
 
 <style lang="scss">
+
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap');
+
+* {
+  list-style: none;
+  outline: none;
+  font-family: 'Kanit', sans-serif;
+  box-sizing: border-box;
+}
+
 #row-header {
   width: 97%;
   margin-left: 20px;

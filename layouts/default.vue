@@ -1,8 +1,8 @@
 <template>
   <v-app light style="background-color: #e4e5e5">
-      <Nav v-if="false" />
+      <Nav v-if="$store.getters.getNavHomeState"/>
       <NavDense v-if="false" />
-      <NavLogin v-if="true"/>
+      <NavLogin v-if="$store.getters.getNavLoginState"/>
     <v-main>
       <!-- <v-overlay value="false">
         <v-progress-circular
@@ -41,5 +41,10 @@ export default {
       },
     }
   },
+  mounted() {
+    this.$store.dispatch({type: "defaultHome" })
+    console.log(this.$store.getters.getNavHomeState)
+    console.log(this.$store.getters.getNavLoginState)
+  }
 }
 </script>

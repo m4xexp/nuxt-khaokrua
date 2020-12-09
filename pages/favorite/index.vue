@@ -111,7 +111,7 @@
 
             <div class="btn-fav-recipe">
               <div>
-                <v-icon class="btn-fav-recipe-icon" style=""
+                <v-icon class="btn-fav-recipe-icon"
                   >favorite_border</v-icon
                 >
               </div>
@@ -179,6 +179,8 @@
 import popup from '~/components/Popup/popup.vue'
 
 export default {
+
+  middleware: 'auth',
   name: 'Favorite',
 
   components: { popup },
@@ -268,6 +270,16 @@ export default {
 </script>
 
 <style lang="scss">
+
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap');
+
+* {
+  list-style: none;
+  outline: none;
+  font-family: 'Kanit', sans-serif;
+  box-sizing: border-box;
+}
+
 .fav-container {
   margin: 5px auto;
   width: 90%;
@@ -332,6 +344,24 @@ export default {
 
 .menu-card-cober-each-card .menu-card-each-card {
   padding: 15px 15px 15px 15px;
+}
+
+.menu-card-each-card .btn-fav-recipe .btn-fav-recipe-icon {
+  position: absolute;
+  left: 80%;
+  bottom: 43%;
+  background: red;
+  color: white;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 15px;
+  border-radius: 50%;
+  transition: 0.3s ease-in-out;
+  &:hover {
+    background: red;
+    color: white;
+    transform: scale(1.1);
+  }
 }
 
 .menu-card-each-card .btn-fav-recipe .btn-fav-recipe-icon:hover {

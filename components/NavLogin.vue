@@ -137,7 +137,7 @@
 
                     <v-divider class="my-3"></v-divider>
 
-                    <v-btn depressed rounded text href="#">
+                    <v-btn depressed rounded text @click="handleLogoutClicked">
                       <v-icon left>login</v-icon>
                       <span>ออกจากระบบ</span>
                     </v-btn>
@@ -169,6 +169,9 @@ export default {
     login() {
       this.dialog = true
     },
+    handleLogoutClicked(){
+      $nuxt.$auth.logout()
+    }
   },
 }
 </script>
