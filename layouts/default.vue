@@ -1,13 +1,18 @@
 <template>
   <v-app light style="background-color: #e4e5e5">
-    <v-nav>
       <Nav v-if="false" />
-      <NavDense v-if="true" />
-    </v-nav>
+      <NavDense v-if="false" />
+      <NavLogin v-if="true"/>
     <v-main>
+      <!-- <v-overlay value="false">
+        <v-progress-circular
+          indeterminate
+          size="64"
+        ></v-progress-circular>
+      </v-overlay> -->
       <nuxt />
     </v-main>
-    <v-footer :absolute="!fixed" app>
+    <v-footer app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
@@ -16,8 +21,10 @@
 <script>
 import Nav from '~/components/Nav.vue'
 import NavDense from '~/components/NavDense.vue'
+import NavLogin from '~/components/NavLogin.vue'
+
 export default {
-  components: { Nav, NavDense },
+  components: { Nav, NavDense, NavLogin },
 
   data() {
     return {

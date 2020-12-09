@@ -1,21 +1,47 @@
 <template>
-  <div class="login-container">
-    <v-card class="card-login" style="border-radius: 10px; margin-top: 50px">
+  <div class="signup-container">
+    <v-card class="card-signup" style="border-radius: 10px; margin-top: 50px">
       <v-row justify="center" class="title">
-        <span class="login-title"> เข้าสู่ระบบ </span>
+        <span class="signup-title"> สมัครสมาชิก </span>
       </v-row>
       <v-form ref="form" v-model="valid" lazy-validation>
+        <v-row>
+          <v-col cols="12" md="6">
+            <v-text-field
+              solo
+              outlined
+              rounded
+              v-model="user.firstname"
+              :rules="nameRules"
+              label="ชื่อ"
+              required
+            ></v-text-field>
+          </v-col>
+
+          <v-col cols="12" md="6">
+            <v-text-field
+              solo
+              outlined
+              rounded
+              v-model="user.lastname"
+              :rules="nameRules"
+              label="นามสกุล"
+              required
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
         <div class="input-email">
           <v-text-field
             color="primary"
             solo
             rounded
             outlined
-            v-model="account.email"
+            v-model="user.email"
             required
             autocomplete="username"
             :rules="emailRules"
-            placeholder="Email"
+            placeholder="อีเมล"
             name="email"
           ></v-text-field>
         </div>
@@ -25,16 +51,34 @@
             solo
             rounded
             outlined
-            placeholder="Password"
+            placeholder="รหัสผ่าน"
             required
             min="9"
             autocomplete="password"
             :rules="passwordRules"
-            v-model="account.password"
+            v-model="user.password"
             :type="showPassword ? 'text' : 'password'"
             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append="showPassword = !showPassword"
             name="password"
+          ></v-text-field>
+        </div>
+
+        <div class="input-confirm-password">
+          <v-text-field
+            solo
+            rounded
+            outlined
+            placeholder="ยืนยันรหัสผ่าน"
+            required
+            min="9"
+            autocomplete="password"
+            :rules="passwordRules"
+            v-model="user.password"
+            :type="showPassword ? 'text' : 'password'"
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="showPassword = !showPassword"
+            name="conPassword"
           ></v-text-field>
         </div>
 
@@ -47,16 +91,9 @@
             name="btnLogin"
             style="width: 100%"
           >
-            เข้าสู่ระบบ
+            สมัครสมาชิก
           </v-btn>
         </div>
-
-        <v-row justify="center">
-          <p style="margin-right: 10px" class="text">ยังไม่มีบัญชีใช่มั้ย?</p>
-          <router-link to="/signup">
-            <p class="text">สมัครสมาชิก</p>
-          </router-link>
-        </v-row>
       </v-form>
     </v-card>
   </div>
@@ -64,12 +101,15 @@
 
 <script>
 export default {
-  name: 'login',
+  name: 'signup',
   components: {},
   data() {
     return {
       showPassword: false,
-      account: {
+      user: {
+        firstname: '',
+        lastname: '',
+        username: '',
         email: '',
         password: '',
       },
@@ -100,7 +140,7 @@ export default {
 </script>
 
 <style scope>
-.login-container {
+.signup-container {
   height: 100px;
 }
 
@@ -109,13 +149,13 @@ export default {
   margin-bottom: 1em;
 }
 
-.login-title {
+.signup-title {
   font-size: 36px;
   font-weight: bold;
   text-align: center;
 }
 
-.card-login {
+.card-signup {
   padding: 30px;
   margin: 50px auto;
   max-width: 600px;
@@ -129,19 +169,19 @@ export default {
 }
 
 @media only screen and (max-width: 1264px) {
-  .card-login {
+  .card-signup {
     max-width: 800px;
   }
 }
 
 @media only screen and (max-width: 960px) {
-  .card-login {
+  .card-signup {
     width: 600px;
   }
 }
 
 @media only screen and (max-width: 600px) {
-  .card-login {
+  .card-signup {
     width: 300px;
   }
 }

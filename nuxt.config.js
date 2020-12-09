@@ -21,6 +21,7 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
+    // '~/plugins/axios'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -39,20 +40,7 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     'nuxt-material-design-icons',
-
-    // 'nuxt-fontawesome', {
-    //   imports: [
-    //     {
-    //       set: '@fortawesome/free-solid-svg-icons',
-    //       icons: ['fas']
-    //     },
-    //     {
-    //       set: '@fortawesome/free-brands-svg-icons',
-    //       icons: ['fab']
-    //     }
-    //   ]
-    // }
-
+    // '@nuxtjs/proxy'
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
@@ -79,5 +67,13 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-  }
+    // vendor: [
+    //   'vue-axios' //-- add vendor vue-axios
+    // ],
+  },
+
+  // proxy: {
+  //   '/api': 'http://127.0.0.1:8888', //-- ตั้งค่า map proxy url api server
+  //   ws: true
+  // },
 }

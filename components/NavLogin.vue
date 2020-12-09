@@ -1,25 +1,30 @@
 <template>
   <div>
     <v-app-bar
-      prominent
-      absolute
+      dense
       app
       dark
+      absolute
       class="header-nav"
-      height="360px"
-      fade-img-on-scroll
-      src="https://firebasestorage.googleapis.com/v0/b/khaokrua-e8479.appspot.com/o/cover_khaokrua.jpg?alt=media&token=7ba8172c-25e6-4585-8dde-9b108eb98054"
     >
-      <div class="header-nav-icon">
-        <div class="nav-nav-icon">
-          <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <!-- Logo KhaoKrua -->
+
+      <div class="header-nav-logo" style="display: none">
+        <div class="nav-logo">
+          <v-img
+            alt="khaokrua Logo"
+            class="shrink mr-2"
+            contain
+            src="https://firebasestorage.googleapis.com/v0/b/khaokrua-e8479.appspot.com/o/KhaoKrua_logo.png?alt=media&token=ea7ca56b-be32-47da-adb5-e956ab039f73"
+            transition="scale-transition"
+            id="nav-logo-khakrua"
+          />
         </div>
       </div>
-      <!-- Logo KhaoKrua -->
 
       <div class="header-nav-logo">
         <nuxt-link to="/">
-        <div class="nav-logo">
+          <div class="nav-logo">
             <v-img
               alt="khaokrua Logo"
               class="shrink mr-2"
@@ -27,15 +32,14 @@
               src="https://firebasestorage.googleapis.com/v0/b/khaokrua-e8479.appspot.com/o/KhaoKrua_logo.png?alt=media&token=ea7ca56b-be32-47da-adb5-e956ab039f73"
               transition="scale-transition"
               width="360"
-              @click="onClicklLogo"
             />
-        </div>
+          </div>
         </nuxt-link>
       </div>
 
       <!-- Seach Recipe https://i.pinimg.com/originals/13/05/4e/13054e16f995defb42e543ccc0e32f58.jpg-->
 
-      <div class="search-field" style="">
+      <div class="search-field" style="display: none">
         <div class="search-text-field-bar">
           <v-text-field
             light
@@ -72,7 +76,7 @@
           </nuxt-link>
         </li>
 
-        <!-- Profile Menu -->
+        <!-- Login Menu -->
 
         <li class="btn-profile">
           <v-menu bottom min-width="200px" rounded offset-y>
@@ -121,6 +125,13 @@
 
                     <v-btn depressed rounded text href="/add">
                       <v-icon left>add</v-icon>
+                      <span>สูตรอาหารของฉัน</span>
+                    </v-btn>
+
+                    <v-divider class="my-3"></v-divider>
+
+                    <v-btn depressed rounded text href="/add">
+                      <v-icon left>add</v-icon>
                       <span>เพิ่มสูตรอาหาร</span>
                     </v-btn>
 
@@ -138,29 +149,6 @@
         </li>
       </ul>
     </v-app-bar>
-
-    <v-navigation-drawer v-model="drawer" absolute app temporary>
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title class="title"> Application </v-list-item-title>
-          <v-list-item-subtitle> subtext </v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
-
-      <v-divider></v-divider>
-
-      <v-list dense nav>
-        <v-list-item v-for="item in items" :key="item.title" link>
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
   </div>
 </template>
 
@@ -169,28 +157,23 @@ export default {
   data: () => ({
     image: [{ logoPath: '' }],
     drawer: false,
-    items: [
-      { icon: 'dashboard', title: 'แดชบอร์ด', route: '/dashboard' },
-      { icon: 'folder', title: 'โปรเจค', route: '/project' },
-    ],
     user: {
       initials: 'ploylada',
       fullName: 'Ploylada',
       email: 'priewmx1027@gmail.com',
     },
+    dialog: false,
   }),
+
   methods: {
-    onClicklLogo () {
-      console.log("pass")
-    }
-  }
+    login() {
+      this.dialog = true
+    },
+  },
 }
 </script>
 
-
-
-<style lang="scss">
-
+<style lang="scss" scoped>
 .header-nav {
   overflow: hidden;
 }
@@ -203,6 +186,16 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+#nav-logo-khakrua {
+  width: 360px;
+}
+
+@media only screen and (max-width: 600px) {
+  #nav-logo-khakrua {
+    width: 250px;
+  }
 }
 
 .header-nav-logo .nav-logo {
@@ -273,13 +266,31 @@ export default {
   margin: 3px 5px;
   display: inline-block;
   /* background-color: red; */
-  & > .btn-profile{
-    display: none;
+  & a {
+    text-decoration: none;
   }
 }
 
 span {
   vertical-align: middle;
+}
+
+// ul li a {
+//   text-decoration: none;
+// }
+
+ul li {
+  cursor: pointer;
+}
+
+li a span {
+  font-size: 16px;
+  color: rgb(255, 255, 255);
+}
+
+li div span {
+  font-size: 16px;
+  color: rgb(255, 255, 255);
 }
 
 .header-nav-menu .nav-menu .btn-add-recipe {
@@ -292,9 +303,9 @@ span {
   height: 15%;
 }
 
-.header-nav-menu .nav-menu .btn-profile {
+.btn-profile {
+  display: block;
   margin: 0;
-  display: none;
   /* background-color: black; */
 }
 </style>

@@ -10,7 +10,7 @@
           </template>
         </v-breadcrumbs>
 
-        <h1 class="header-recipe-text">บัวลอยไข่หวาน</h1>
+        <h1 class="header-recipe-text">{{tutorial.title}}</h1>
 
         <div class="recipe-header-info">
           <div class="author-box">
@@ -25,7 +25,7 @@
             <div class="auther-text">
               <div class="menu-rating">
                 <v-rating
-                  value="4.8"
+                  value=4.8
                   color="amber"
                   dense
                   half-increments
@@ -80,7 +80,6 @@
         <v-sheet class="sheet-recipe-share-area">
           <div class="share-button">
             <i class="fab fa-facebook"></i>
-            <font-awesome-icon :icon="['fab', 'facebook']"/>
             <v-btn color="primary"><v-icon>fab fa-facebook</v-icon></v-btn>
           </div>
         </v-sheet>
@@ -102,7 +101,7 @@
             <div class="data-serve-recipe">
               <div class="data-serve">
                 <span class="serve-no">เสิร์ฟ :</span>
-                <span class="no-data" href="#">1 ที่</span>
+                <span class="no-data" href="#">{{tutorial.id}} ที่</span>
               </div>
               <div class="data-yield">
                 <span class="yield-no">จำนวน :</span>
@@ -162,8 +161,12 @@
 <script>
 
 import axios from 'axios';
+import TutorialDataService from '../../services/TutorialDataService'
 
 export default {
+
+  name: "recipe",
+
   data: () => ({
     breadcrumbs: [
       {
@@ -246,6 +249,7 @@ export default {
           'ตอกไข่ไก่ใส่ถ้วย ค่อย ๆ เทลงในหม้อน้ำกะทิ รอจนไข่สุกตามชอบ จากนั้นตักใส่ลงในถ้วยบัวลอย พร้อมเสิร์ฟ',
       },
     ],
+    tutorial: [],
   }),
   methods: {
     getDataRecipe() {
@@ -253,8 +257,30 @@ export default {
       .then(res=>{
         console.log(res)
       })
-    }
-  }
+    },
+    getDisplayTutorial(tutorials) {
+      return {
+        id: tutorials.id,
+        title: tutorials.title.length > 30 ? tutorials.title.substr(0, 30) + "..." : tutorials.title
+      };
+    },
+    retrieveTutorials() {
+      TutorialDataService.getAll()
+        .then((res) => {
+          this.tutorials = res.data.map(this.getDisplayTutorial);
+          console.log('Tutorial Data',res.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+  },
+
+  mounted(){
+    this.retrieveTutorials()
+  } 
+    
+
 }
 </script>
 

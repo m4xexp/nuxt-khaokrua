@@ -14,7 +14,7 @@
           </template>
         </v-breadcrumbs>
 
-        <h1 style="text-align: center; margin-top: 60px">เมนูโปรด</h1>
+        <h1 style="text-align: center; margin-top: 60px">สูตรของฉัน</h1>
 
         <v-btn
           color="success"
@@ -28,49 +28,10 @@
       </v-sheet>
     </v-row>
 
-    <v-dialog v-model="dialog" class="popup-submit-delete" width="600px">
-      <v-card class="card-popup" width="100%">
-        <div style="text-align: center; padding: 20px">
-          <span style="font-size: 24px; font-weight: bold">จะลบสูตรนี้ออกจากเมนูโปรดหรือไม่?</span>
-        </div>
-
-        <div class="div-action" style="display: block; width: 60%; margin: 0px auto; padding: 20px" >
-          <v-btn color="success" class="submit">ยืนยัน</v-btn>
-          <v-btn color="warning" class="cancel">ยกเลิก</v-btn>
-        </div>
-      </v-card>
-    </v-dialog>
-
     <!-- Card menu -->
 
-    <div class="menu-card-box-fav">
+    <div class="menu-card-box-my">
       <v-layout row wrap class="menu-card-cober-each-card">
-        <v-card
-          class="mx-auto"
-          max-width="400"
-          style="margin: 15px 15px; padding: 30px 30px; position: relative"
-          id="card-add-recipe"
-        >
-          <v-btn
-            x-large
-            elevation="5"
-            icon
-            raised
-            class="icon-in-add-fav"
-            href="/search"
-          >
-            <v-icon>add</v-icon>
-          </v-btn>
-          <v-card-title
-            ><span class="text-in-add-fav">ค้นหาสูตรที่ใช่</span>
-          </v-card-title>
-          <v-card-action>
-            <span class="footer-in-add-fav">
-              <h5>----- หรือ -----</h5>
-              <a href="/add">เพื่มสูตรของคุณเอง!</a>
-            </span>
-          </v-card-action>
-        </v-card>
 
         <!-- Main favorite card -->
 
@@ -83,6 +44,7 @@
           :key="recipe.Name"
           class="menu-card-each-card"
         >
+
           <!-- Card -->
 
           <v-card
@@ -163,7 +125,10 @@
 
             <v-overlay :absolute="absolute" :value="overlay">
               <v-btn color="warning" @click="overlay = false">
-                <span @click="AddDialog">ลบออกจากเมนูโปรด</span>
+                <span>แก้ไขสูตร</span>
+              </v-btn>
+              <v-btn color="warning" @click="overlay = false">
+                <span>ลบสูตร</span>
               </v-btn>
             </v-overlay>
           </v-card>
@@ -176,12 +141,11 @@
 <script>
 // import Pagination from "./Pagination.vue";
 // import Searchrecipe from "./SearchRecipe.vue";
-import popup from '~/components/Popup/popup.vue'
 
 export default {
-  name: 'Favorite',
+  name: 'Home',
 
-  components: { popup },
+  components: {},
 
   pagination() {
     return {
@@ -194,7 +158,6 @@ export default {
     selection: 1,
     absolute: true,
     overlay: false,
-    dialog: false,
     menus: [
       {
         Name: 'ต้มยำกุ้ง',
@@ -260,9 +223,6 @@ export default {
 
       setTimeout(() => (this.loading = false), 2000)
     },
-    AddDialog() {
-      this.dialog = true
-    },
   },
 }
 </script>
@@ -274,12 +234,12 @@ export default {
   position: relative;
 }
 
-// .sheet-fav-menu {
-//   border-radius: 10px 10px 0px 0px;
-//   padding: 50px;
-//   margin-top: 0 auto;
-//   width: 100%;
-// }
+.sheet-fav-menu {
+  border-radius: 10px 10px 0px 0px;
+  padding: 50px;
+  margin-top: 0 auto;
+  width: 100%;
+}
 
 .sheet-fav-menu {
   border-radius: 10px 10px 0px 0px;
@@ -353,7 +313,7 @@ export default {
   text-align: center;
 }
 
-#card-add-recipe {
+#card-add-recipe{
   width: 300px;
 }
 
@@ -374,14 +334,14 @@ export default {
   }
 }
 
-#card-recipe .menu-card-box-fav {
+#card-recipe .menu-card-box-my {
   background-color: white;
   margin-left: 20px;
   margin-right: 20px;
   padding: 20px;
 }
 
-.menu-card-box-fav {
+.menu-card-box-my {
   background-color: white;
   padding: 20px;
   border-radius: 0px 0px 10px 10px;
@@ -415,10 +375,6 @@ export default {
   #card-add-recipe {
     width: 300px;
   }
-}
-
-.popup-submit-delete {
-  // width: 500px;
 }
 </style>
 

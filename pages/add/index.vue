@@ -95,7 +95,7 @@
                 <span>เวลาเตรียม :</span>
                 <div class="prep-time">
                   <div class="prep-time-input">
-                    <v-text-field solo placeholder="ใส่เวลาเตรียม" v-model="DataRecipe.PrepTime.num" @blur="AddPrepTime">
+                    <v-text-field solo placeholder="ใส่เวลาเตรียม" v-model="DataRecipe.PrepTime.num">
                     </v-text-field>
                   </div>
                   <div class="prep-time-select">
@@ -172,14 +172,12 @@
                     clearable
                     placeholder="เช่น 2 ช้อนโต๊ะ"
                     style="margin: 15px 0px 15px 20px"
-                    @blur="addIngredbeforePost"
+                    @blur="addIngredbeforePost()"
                   ></v-text-field>
                 </div>
-                <div class="action">
-                  <span class="delete-directions" @click="deleteStep"
+                <div class="delete-ingredient" @click="deleteIngredient">
+                  <span
                     ><v-icon
-                      @click="deleteIngredient"
-                      style="margin-top: 28px; margin-left: 10px"
                       >delete</v-icon
                     ></span
                   >
@@ -227,7 +225,7 @@
                     style="display: flex; justify-content: space-between"
                   >
                     <span style="margin-left: 10px">{{ step.text }}</span>
-                    <span class="delete-directions" @click="deleteStep"
+                    <span class="delete-directions" @click="deleteIngredient"
                       ><v-icon>delete</v-icon></span
                     >
                   </div>
@@ -279,6 +277,8 @@
 <script>
 // import AddIngred from '~/components/AddRecipe/AddIngred';
 import axois from 'axios'
+import recipe from '../../services/recipe'
+import TutorialDataService from '../../services/TutorialDataService'
 
 export default {
   components: {},
@@ -324,6 +324,7 @@ export default {
     ],
 
     DataRecipe: {
+      id: null,
       RecipeTitle: null,
       RecipeCaption: null,
       RecipeTag: null,
@@ -345,12 +346,13 @@ export default {
       Favorite: false,
       // OnEdit: false
     },
+    TestAPI : {
+      title: 'ลองงงงงง',
+      description: 'เผื่อออออออ'
+    }
   }),
 
   methods: {
-    // AddPrepTime(){
-    //   this.DataRecipe.PrepTime = 
-    // },
     addIngred() {
       this.Ingredients.push({
         text: this.newIngred,
@@ -358,7 +360,7 @@ export default {
       })
 
       this.idIngred++
-      console.log(this.Ingredients)
+      console.log('Ingredient', this.Ingredients)
       this.DataRecipe.Ingredients = this.Ingredients.slice(
         0,
         this.Ingredients.length - 1
@@ -367,13 +369,13 @@ export default {
 
     addIngredbeforePost() {
       this.DataRecipe.Ingredients = this.Ingredients
-      console.log(this.Ingredients)
+      console.log('Ingredient', this.Ingredients)
     },
 
     deleteIngredient(index) {
       this.Ingredients.splice(index, 1)
       this.DataRecipe.Ingredients = this.Ingredients
-      console.log(this.Ingredients)
+      console.log('Ingredient', this.Ingredients)
     },
 
     createStep() {
@@ -386,12 +388,12 @@ export default {
       this.idStep++
       this.newStep = null
       this.DataRecipe.Directions = this.steps
-      console.log(this.steps)
+      console.log('Steps', this.steps)
     },
 
     deleteStep(index) {
       this.steps.splice(index, 1)
-      console.log(this.steps)
+      console.log('Steps', this.steps)
     },
 
     editStep(step) {
@@ -402,19 +404,32 @@ export default {
     },
 
     saveRecipeData(event) {
+
       event.preventDefault()
-      axois
-        .post(
-          'https://khaokrua-cooking-default-rtdb.firebaseio.com/Recipe.json',
-          this.DataRecipe
-        )
-        .then((res) => {
-          console.log(res)
+
+      let data = this.TestAPI
+
+      TutorialDataService.getAll()
+        .then((response) => {
+          console.log(response.data);
+          // this.submitted = true;
         })
-        .catch((err) => {
-          console.log(err)
-        })
-      console.log(this.DataRecipe)
+        .catch((e) => {
+          console.log(e);
+        });
+
+      // axois
+      //   .post(
+      //     'https://khaokrua-cooking-default-rtdb.firebaseio.com/Recipe.json',
+      //     this.DataRecipe
+      //   )
+      //   .then((res) => {
+      //     console.log(res)
+      //   })
+      //   .catch((err) => {
+      //     console.log(err)
+      //   })
+      console.log('Data Recipe',this.DataRecipe)
     },
   },
 }
@@ -615,6 +630,8 @@ export default {
 .delete-ingredient {
   cursor: pointer;
   transition: 0.25s ease-in-out;
+  margin-top: 28px;
+    margin-left: 10px;
   &:hover {
     transform: scale(1.2);
   }
