@@ -18,29 +18,19 @@
       <!-- Logo KhaoKrua -->
 
       <div class="header-nav-logo">
+        <nuxt-link to="/">
         <div class="nav-logo">
-          <v-img
-            alt="khaokrua Logo"
-            class="shrink mr-2"
-            contain
-            src="https://firebasestorage.googleapis.com/v0/b/khaokrua-e8479.appspot.com/o/KhaoKrua_logo.png?alt=media&token=ea7ca56b-be32-47da-adb5-e956ab039f73"
-            transition="scale-transition"
-            width="360"
-          />
+            <v-img
+              alt="khaokrua Logo"
+              class="shrink mr-2"
+              contain
+              src="https://firebasestorage.googleapis.com/v0/b/khaokrua-e8479.appspot.com/o/KhaoKrua_logo.png?alt=media&token=ea7ca56b-be32-47da-adb5-e956ab039f73"
+              transition="scale-transition"
+              width="360"
+              @click="onClicklLogo"
+            />
         </div>
-      </div>
-
-      <div class="header-nav-logo">
-        <div class="nav-logo">
-          <v-img
-            alt="khaokrua Logo"
-            class="shrink mr-2"
-            contain
-            src="../assets/KhaoKrua_logo.png"
-            transition="scale-transition"
-            width="360"
-          />
-        </div>
+        </nuxt-link>
       </div>
 
       <!-- Seach Recipe https://i.pinimg.com/originals/13/05/4e/13054e16f995defb42e543ccc0e32f58.jpg-->
@@ -69,83 +59,22 @@
       </div>
       <ul class="nav-menu">
         <li class="btn-add-recipe">
-          <v-btn left text>
+          <nuxt-link to="/add">
             <v-icon>add</v-icon>
             <span>เพิ่มสูตรอาหาร</span>
-          </v-btn>
+          </nuxt-link>
         </li>
 
         <li class="btn-fav-recipe">
-          <v-btn left text link href="/pages/favorite">
+          <nuxt-link to="/favorite">
             <v-icon left>favorite</v-icon>
             <span>เมนูโปรด</span>
-          </v-btn>
+          </nuxt-link>
         </li>
 
         <!-- Profile Menu -->
 
-        <li class="btn-profile">
-          <v-menu bottom min-width="200px" rounded offset-y>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                icon
-                x-large
-                v-bind="attrs"
-                v-on="on"
-                max-width="32px"
-                max-height="32px"
-              >
-                <v-avatar>
-                  <img
-                    src="../assets/Profile/miew.jpg"
-                    alt="miew"
-                    style="max-width: 32px; max-height: 32px"
-                  />
-                </v-avatar>
-              </v-btn>
-            </template>
-            <v-card>
-              <v-list-item-content>
-                <div class="mx-auto text-center">
-                  <!-- Profile button -->
-                  <v-btn x-large icon>
-                    <v-avatar>
-                      <img src="../assets/Profile/miew.jpg" alt="nong" />
-                    </v-avatar>
-                  </v-btn>
-                  <div class="prfile-title" style="margin: 10px">
-                    <h4 class="profile-title-name">{{ user.fullName }}</h4>
-                    <p class="caption mt-1" id="profile-title-email">
-                      {{ user.email }}
-                    </p>
-                  </div>
-
-                  <div class="profile-items">
-                    <v-divider class="my-3"></v-divider>
-                    <v-btn depressed rounded text href="#">
-                      <v-icon left>account_circle</v-icon>
-                      <span>แก้ไขโปรไฟล์</span>
-                    </v-btn>
-
-                    <v-divider class="my-3"></v-divider>
-
-                    <v-btn depressed rounded text href="#">
-                      <v-icon left>add</v-icon>
-                      <span>เพิ่มสูตรอาหาร</span>
-                    </v-btn>
-
-                    <v-divider class="my-3"></v-divider>
-
-                    <v-btn depressed rounded text href="#">
-                      <v-icon left>login</v-icon>
-                      <span>ออกจากระบบ</span>
-                    </v-btn>
-                  </div>
-                </div>
-              </v-list-item-content>
-            </v-card>
-          </v-menu>
-        </li>
+        
       </ul>
     </v-app-bar>
 
@@ -189,17 +118,20 @@ export default {
       email: 'priewmx1027@gmail.com',
     },
   }),
+  methods: {
+    onClicklLogo () {
+      console.log("pass")
+    }
+  }
 }
 </script>
 
 
 
-<style scrope>
-* {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  box-sizing: border-box;
+<style lang="scss">
+
+.header-nav {
+  overflow: hidden;
 }
 
 .header-nav-logo {
@@ -280,6 +212,9 @@ export default {
   margin: 3px 5px;
   display: inline-block;
   /* background-color: red; */
+  & > .btn-profile{
+    display: none;
+  }
 }
 
 span {
@@ -298,6 +233,7 @@ span {
 
 .header-nav-menu .nav-menu .btn-profile {
   margin: 0;
+  display: none;
   /* background-color: black; */
 }
 </style>

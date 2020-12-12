@@ -1,24 +1,49 @@
 <template>
-  <div class="home-container">
-    <v-row
-      no-gutters
-      class="md-6"
-      style="
-        width: 97%;
-        margin-left: 20px;
-        margin-top: 20px;
-        display: flex;
-        justify-content: center;
-      "
-    >
+  <div class="fav-container">
+    <v-row no-gutters class="md-6">
       <v-sheet color="white" height="150" class="sheet-fav-menu">
-        <h1 style="text-align: center">เมนูโปรด</h1>
+        <v-breadcrumbs
+          :items="breadcrumbs"
+          style="position: absolute; left: 0px; top: 0px"
+          large
+        >
+          <template v-slot:item="{ item }">
+            <v-breadcrumbs-item :href="item.href" :disabled="item.disabled">
+              {{ item.text.toUpperCase() }}
+            </v-breadcrumbs-item>
+          </template>
+        </v-breadcrumbs>
+
+        <h1 style="text-align: center; margin-top: 60px">เมนูโปรด</h1>
+
+        <v-btn
+          color="success"
+          absolute
+          outlined
+          text
+          style="right: 20px; top: 15px"
+          @click="overlay = !overlay"
+          ><span>แก้ไข</span></v-btn
+        >
       </v-sheet>
     </v-row>
 
+    <v-dialog v-model="dialog" class="popup-submit-delete" width="600px">
+      <v-card class="card-popup" width="100%">
+        <div style="text-align: center; padding: 20px">
+          <span style="font-size: 24px; font-weight: bold">จะลบสูตรนี้ออกจากเมนูโปรดหรือไม่?</span>
+        </div>
+
+        <div class="div-action" style="display: block; width: 60%; margin: 0px auto; padding: 20px" >
+          <v-btn color="success" class="submit">ยืนยัน</v-btn>
+          <v-btn color="warning" class="cancel">ยกเลิก</v-btn>
+        </div>
+      </v-card>
+    </v-dialog>
+
     <!-- Card menu -->
 
-    <div class="menu-card-box">
+    <div class="menu-card-box-fav">
       <v-layout row wrap class="menu-card-cober-each-card">
         <v-card
           class="mx-auto"
@@ -26,7 +51,14 @@
           style="margin: 15px 15px; padding: 30px 30px; position: relative"
           id="card-add-recipe"
         >
-          <v-btn x-large elevation="5" icon raised class="icon-in-add-fav">
+          <v-btn
+            x-large
+            elevation="5"
+            icon
+            raised
+            class="icon-in-add-fav"
+            href="/search"
+          >
             <v-icon>add</v-icon>
           </v-btn>
           <v-card-title
@@ -35,7 +67,7 @@
           <v-card-action>
             <span class="footer-in-add-fav">
               <h5>----- หรือ -----</h5>
-              <a href="#">เพื่มสูตรของคุณเอง!</a>
+              <a href="/add">เพื่มสูตรของคุณเอง!</a>
             </span>
           </v-card-action>
         </v-card>
@@ -79,7 +111,7 @@
 
             <div class="btn-fav-recipe">
               <div>
-                <v-icon class="btn-fav-recipe-icon" style=""
+                <v-icon class="btn-fav-recipe-icon"
                   >favorite_border</v-icon
                 >
               </div>
@@ -128,6 +160,12 @@
                 <span>ทำอาหาร</span>
               </v-btn>
             </v-card-actions>
+
+            <v-overlay :absolute="absolute" :value="overlay">
+              <v-btn color="warning" @click="overlay = false">
+                <span @click="AddDialog">ลบออกจากเมนูโปรด</span>
+              </v-btn>
+            </v-overlay>
           </v-card>
         </v-flex>
       </v-layout>
@@ -138,11 +176,14 @@
 <script>
 // import Pagination from "./Pagination.vue";
 // import Searchrecipe from "./SearchRecipe.vue";
+import popup from '~/components/Popup/popup.vue'
 
 export default {
-  name: 'Home',
 
-  components: {},
+  middleware: 'auth',
+  name: 'Favorite',
+
+  components: { popup },
 
   pagination() {
     return {
@@ -153,6 +194,9 @@ export default {
   data: () => ({
     loading: false,
     selection: 1,
+    absolute: true,
+    overlay: false,
+    dialog: false,
     menus: [
       {
         Name: 'ต้มยำกุ้ง',
@@ -199,39 +243,60 @@ export default {
       { tagName: 'Milk' },
       { tagName: 'Ice cream' },
     ],
-    methods: {
-      reserve() {
-        this.loading = true
-
-        setTimeout(() => (this.loading = false), 2000)
+    breadcrumbs: [
+      {
+        text: 'หน้าแรก',
+        disabled: false,
+        href: '/',
       },
-    },
+      {
+        text: 'เมนูโปรด',
+        disabled: true,
+        href: 'favorite',
+      },
+    ],
   }),
+  methods: {
+    reserve() {
+      this.loading = true
+
+      setTimeout(() => (this.loading = false), 2000)
+    },
+    AddDialog() {
+      this.dialog = true
+    },
+  },
 }
 </script>
 
 <style lang="scss">
+
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap');
 
 * {
-  margin: 0;
-  padding: 0;
+  list-style: none;
   outline: none;
   font-family: 'Kanit', sans-serif;
   box-sizing: border-box;
 }
 
-.home-container {
+.fav-container {
   margin: 5px auto;
   width: 90%;
   position: relative;
 }
 
+// .sheet-fav-menu {
+//   border-radius: 10px 10px 0px 0px;
+//   padding: 50px;
+//   margin-top: 0 auto;
+//   width: 100%;
+// }
+
 .sheet-fav-menu {
   border-radius: 10px 10px 0px 0px;
-  padding: 80px;
-  margin-top: 0 auto;
   width: 100%;
+  padding: 20px;
 }
 
 .icon-in-add-fav {
@@ -272,10 +337,9 @@ export default {
   color: rgb(0, 0, 0);
   text-decoration: none;
   transition: 0.25s ease-in-out;
-}
-
-.footer-in-add-fav a:hover {
-  font-size: 20px;
+  &:hover {
+    font-size: 20px;
+  }
 }
 
 .menu-card-cober-each-card .menu-card-each-card {
@@ -293,6 +357,11 @@ export default {
   padding: 15px;
   border-radius: 50%;
   transition: 0.3s ease-in-out;
+  &:hover {
+    background: red;
+    color: white;
+    transform: scale(1.1);
+  }
 }
 
 .menu-card-each-card .btn-fav-recipe .btn-fav-recipe-icon:hover {
@@ -314,39 +383,38 @@ export default {
   text-align: center;
 }
 
+#card-add-recipe {
+  width: 300px;
+}
+
 #card-recipe {
   transition: 0.25s ease;
   overflow: hidden;
   // cursor: pointer;
-}
-
-#card-recipe:hover {
-  transform: scale(1.05);
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+  }
 }
 
 #card-recipe .card-recipe-img {
   transition: 0.25s ease;
+  &:hover .card-recipe-img {
+    transform: scale(1.2);
+  }
 }
 
-#card-recipe:hover .card-recipe-img {
-  transform: scale(1.2);
-}
-
-.menu-card-box {
+#card-recipe .menu-card-box-fav {
   background-color: white;
   margin-left: 20px;
   margin-right: 20px;
   padding: 20px;
 }
 
-.menu-card-box-2 {
+.menu-card-box-fav {
   background-color: white;
-  margin-top: 50px;
-  margin-left: 20px;
-  margin-right: 20px;
   padding: 20px;
-  border-radius: 0px 10px 10px 10px;
+  border-radius: 0px 0px 10px 10px;
 }
 
 .card-data .box-card-data {
@@ -355,42 +423,32 @@ export default {
   margin: 10px auto;
 }
 
-@media only screen and (max-width: 376px) {
-  #card-add-recipe {
-    width: 250px;
-  }
-}
-
-@media only screen and (max-width: 376px) {
+@media only screen and (max-width: 600px) {
   .sheet-fav-menu {
-    margin-right: 30px;
-    width: 91%;
+    width: 100%;
   }
-}
-
-@media only screen and (max-width: 1920px) {
   #card-add-recipe {
-    width: 300px;
+    height: 300px;
   }
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1264px) {
+  .sheet-fav-menu {
+    width: 100%;
+  }
   #card-add-recipe {
     width: 258.52px;
   }
 }
 
-@media only screen and (max-width: 1024px) {
-  .sheet-fav-menu {
-    margin-right: 15px;
-    width: 99%;
+@media only screen and (max-width: 768px) {
+  #card-add-recipe {
+    width: 300px;
   }
 }
 
-@media only screen and (max-width: 768px) {
-  #card-add-recipe {
-    width: 287.6px;
-  }
+.popup-submit-delete {
+  // width: 500px;
 }
 </style>
 

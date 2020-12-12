@@ -7,6 +7,8 @@
       dark
       class="header-nav"
       height="280px"
+      shrink-on-scroll
+      fade-img-on-scroll
       src="https://firebasestorage.googleapis.com/v0/b/khaokrua-e8479.appspot.com/o/cover_khaokrua.jpg?alt=media&token=7ba8172c-25e6-4585-8dde-9b108eb98054"
     >
       <div class="header-nav-icon">
@@ -14,9 +16,10 @@
           <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
         </div>
       </div>
+
       <!-- Logo KhaoKrua -->
 
-      <div class="header-nav-logo">
+      <div class="header-nav-logo" style="display: none">
         <div class="nav-logo">
           <v-img
             alt="khaokrua Logo"
@@ -24,22 +27,24 @@
             contain
             src="https://firebasestorage.googleapis.com/v0/b/khaokrua-e8479.appspot.com/o/KhaoKrua_logo.png?alt=media&token=ea7ca56b-be32-47da-adb5-e956ab039f73"
             transition="scale-transition"
-            width="360"
+            id="nav-logo-khakrua"
           />
         </div>
       </div>
 
       <div class="header-nav-logo">
-        <div class="nav-logo">
-          <v-img
-            alt="khaokrua Logo"
-            class="shrink mr-2"
-            contain
-            src="../assets/KhaoKrua_logo.png"
-            transition="scale-transition"
-            width="360"
-          />
-        </div>
+        <nuxt-link to="/">
+          <div class="nav-logo">
+            <v-img
+              alt="khaokrua Logo"
+              class="shrink mr-2"
+              contain
+              src="../assets/KhaoKrua_logo.png"
+              transition="scale-transition"
+              width="360"
+            />
+          </div>
+        </nuxt-link>
       </div>
 
       <!-- Seach Recipe https://i.pinimg.com/originals/13/05/4e/13054e16f995defb42e543ccc0e32f58.jpg-->
@@ -68,22 +73,76 @@
       </div>
       <ul class="nav-menu">
         <li class="btn-add-recipe">
-          <v-btn left text>
+          <nuxt-link to="/add">
             <v-icon>add</v-icon>
             <span>เพิ่มสูตรอาหาร</span>
-          </v-btn>
+          </nuxt-link>
         </li>
 
         <li class="btn-fav-recipe">
-          <v-btn left text>
+          <nuxt-link to="/favorite">
             <v-icon left>favorite</v-icon>
             <span>เมนูโปรด</span>
-          </v-btn>
+          </nuxt-link>
         </li>
+
+        <!-- Login Menu -->
+
+        <li class="btn-fav-recipe">
+          <div @click="login">
+            <v-icon left>face</v-icon>
+            <span>เข้าสู่ระบบ</span>
+          </div>
+        </li>
+
+        <v-row justify="center">
+          <v-dialog v-model="dialog" persistent max-width="600px">
+            <v-card>
+              <v-card-title>
+                <span>เข้าสู่ระบบ</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-text-field label="Email*" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                        label="Password*"
+                        type="password"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" style="text-lign: right">
+                      <span>ลืมรหัสผ่าน?</span>
+                    </v-col>
+                  </v-row>
+                  <v-col cols="12">
+                    <v-btn color="success" rounded width="100%">เข้าสู่ระบบ</v-btn>
+                  </v-col>
+                  <v-col cols="12">
+                    <span>หรือเข้าสู่ระบบด้วย</span>
+                  </v-col>
+                </v-container>
+              </v-card-text>
+              <v-card-actions>
+                
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="dialog = false">
+                  Close
+                </v-btn>
+                <v-btn color="blue darken-1" text @click="dialog = false">
+                  Save
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
 
         <!-- Profile Menu -->
 
-        <li class="btn-profile">
+        <li class="btn-profile" style="display: none">
           <v-menu bottom min-width="200px" rounded offset-y>
             <template v-slot:activator="{ on, attrs }">
               <v-btn
@@ -128,10 +187,108 @@
 
                     <v-divider class="my-3"></v-divider>
 
-                    <v-btn depressed rounded text href="#">
+                    <v-btn depressed rounded text href="/add">
                       <v-icon left>add</v-icon>
                       <span>เพิ่มสูตรอาหาร</span>
                     </v-btn>
+
+                    <v-divider class="my-3"></v-divider>
+
+                    <v-row justify="center">
+                      <v-dialog v-model="dialog" persistent max-width="600px">
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                            Open Dialog
+                          </v-btn>
+                        </template>
+                        <v-card>
+                          <v-card-title>
+                            <span class="headline">User Profile</span>
+                          </v-card-title>
+                          <v-card-text>
+                            <v-container>
+                              <v-row>
+                                <v-col cols="12" sm="6" md="4">
+                                  <v-text-field
+                                    label="Legal first name*"
+                                    required
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="4">
+                                  <v-text-field
+                                    label="Legal middle name"
+                                    hint="example of helper text only on focus"
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="4">
+                                  <v-text-field
+                                    label="Legal last name*"
+                                    hint="example of persistent helper text"
+                                    persistent-hint
+                                    required
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="12">
+                                  <v-text-field
+                                    label="Email*"
+                                    required
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="12">
+                                  <v-text-field
+                                    label="Password*"
+                                    type="password"
+                                    required
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="6">
+                                  <v-select
+                                    :items="['0-17', '18-29', '30-54', '54+']"
+                                    label="Age*"
+                                    required
+                                  ></v-select>
+                                </v-col>
+                                <v-col cols="12" sm="6">
+                                  <v-autocomplete
+                                    :items="[
+                                      'Skiing',
+                                      'Ice hockey',
+                                      'Soccer',
+                                      'Basketball',
+                                      'Hockey',
+                                      'Reading',
+                                      'Writing',
+                                      'Coding',
+                                      'Basejump',
+                                    ]"
+                                    label="Interests"
+                                    multiple
+                                  ></v-autocomplete>
+                                </v-col>
+                              </v-row>
+                            </v-container>
+                            <small>*indicates required field</small>
+                          </v-card-text>
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn
+                              color="blue darken-1"
+                              text
+                              @click="dialog = false"
+                            >
+                              Close
+                            </v-btn>
+                            <v-btn
+                              color="blue darken-1"
+                              text
+                              @click="dialog = false"
+                            >
+                              Save
+                            </v-btn>
+                          </v-card-actions>
+                        </v-card>
+                      </v-dialog>
+                    </v-row>
 
                     <v-divider class="my-3"></v-divider>
 
@@ -187,16 +344,20 @@ export default {
       fullName: 'Ploylada',
       email: 'priewmx1027@gmail.com',
     },
+    dialog: false,
   }),
+
+  methods: {
+    login() {
+      this.dialog = true
+    }
+  }
 }
 </script>
 
-<style scrope>
-* {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  box-sizing: border-box;
+<style lang="scss">
+.header-nav {
+  overflow: hidden;
 }
 
 .header-nav-logo {
@@ -207,6 +368,16 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+#nav-logo-khakrua {
+  width: 360px;
+}
+
+@media only screen and (max-width: 600px) {
+  #nav-logo-khakrua {
+    width: 250px;
+  }
 }
 
 .header-nav-logo .nav-logo {
@@ -277,10 +448,31 @@ export default {
   margin: 3px 5px;
   display: inline-block;
   /* background-color: red; */
+  & a {
+    text-decoration: none;
+  }
 }
 
 span {
   vertical-align: middle;
+}
+
+// ul li a {
+//   text-decoration: none;
+// }
+
+ul li{
+    cursor: pointer;
+}
+
+li a span {
+  font-size: 16px;
+  color: rgb(255, 255, 255);
+}
+
+li div span {
+  font-size: 16px;
+  color: rgb(255, 255, 255);
 }
 
 .header-nav-menu .nav-menu .btn-add-recipe {
@@ -293,7 +485,8 @@ span {
   height: 15%;
 }
 
-.header-nav-menu .nav-menu .btn-profile {
+.btn-profile {
+  display: block;
   margin: 0;
   /* background-color: black; */
 }

@@ -21,6 +21,7 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
+    // '~/plugins/axios'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -38,9 +39,26 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    'nuxt-material-design-icons'
-
+    'nuxt-material-design-icons',
+    '@nuxtjs/auth'
   ],
+
+  auth: {
+    redirect: {
+      login: '/login'
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: 'https://sakko-demo-api.herokuapp.com/api/v1/user/sign_in', method: 'post', propertyName: 'user.auth_jwt'},
+          logout: { url: 'https://sakko-demo-api.herokuapp.com/api/v1/user/sign_out', method: 'delete' },
+          user: { url: 'https://sakko-demo-api.herokuapp.com/api/v1/user/me', method: 'get', propertyName: 'user' }
+        },
+        tokenName: 'auth-token'
+      },
+    }
+  
+  },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {},
@@ -66,5 +84,13 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-  }
+    // vendor: [
+    //   'vue-axios' //-- add vendor vue-axios
+    // ],
+  },
+
+  // proxy: {
+  //   '/api': 'http://127.0.0.1:8888', //-- ตั้งค่า map proxy url api server
+  //   ws: true
+  // },
 }
